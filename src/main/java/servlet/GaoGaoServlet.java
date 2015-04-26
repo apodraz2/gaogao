@@ -8,6 +8,8 @@ package servlet;
 
 import com.gaogao.scheduler.gaogaopractice.Dog;
 import com.gaogao.scheduler.gaogaopractice.DogBean;
+import com.gaogao.scheduler.gaogaopractice.Owner;
+import com.gaogao.scheduler.gaogaopractice.OwnerBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -25,6 +27,9 @@ public class GaoGaoServlet extends HttpServlet {
 
     @EJB
     private DogBean dogBean;
+    
+    @EJB
+    private OwnerBean ownerBean;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,6 +54,8 @@ public class GaoGaoServlet extends HttpServlet {
             out.println("<h1>Servlet GaoGaoServlet at " + request.getContextPath() + "</h1>");
             dogBean.createDog("Denver", "04/09/1986");
             out.println("Created dog");
+            ownerBean.createOwner("apodra86@gmail.com", "Sue22sue");
+            out.println("Created owner");
             
             List<Dog> dogs = dogBean.getDogList();
             if(dogs != null) out.println(true);
@@ -57,6 +64,14 @@ public class GaoGaoServlet extends HttpServlet {
                 out.println("<p>");
                 out.println("Dog exists with info: " );
                 out.println(dog.toString());
+                out.println("</p>");
+            }
+            
+            List<Owner> owners = ownerBean.getOwnerList();
+            for(Owner owner : owners) {
+                out.println("<p>");
+                out.println("Owner exists with info: ");
+                out.println(owner.toString());
                 out.println("</p>");
             }
             
