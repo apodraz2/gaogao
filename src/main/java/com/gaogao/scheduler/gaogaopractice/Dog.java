@@ -5,7 +5,7 @@
  */
 package com.gaogao.scheduler.gaogaopractice;
 
-import java.awt.Event;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -47,14 +47,14 @@ public class Dog implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date birthday;
     
-    /**@OneToMany(cascade = CascadeType.ALL, 
-                mappedBy = "ownerId", 
+    @OneToMany(cascade = CascadeType.ALL, 
+                mappedBy = "dogId", 
                 fetch= FetchType.LAZY
     )
-    private List<Event> eventList;**/
+    private List<Event> eventList;
     
     //@OneToMany(optional = true)
-    @ManyToMany(mappedBy="Dog")
+    @ManyToMany(mappedBy="dogList")
     private List<Owner> ownerList;
     
     Dog() {
