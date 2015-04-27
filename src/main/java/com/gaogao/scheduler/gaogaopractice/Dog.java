@@ -7,8 +7,10 @@ package com.gaogao.scheduler.gaogaopractice;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,6 +39,9 @@ public class Dog implements Serializable {
     public static final String DOG_QUERY_ALL = "Dog.findAll";
     
     private static final long serialVersionUID = 1L;
+    
+    @EJB
+    private DogBean dogBean;
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -104,6 +109,15 @@ public class Dog implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public void addOwner(Owner o) {
+        if(this.ownerList == null) {
+            this.ownerList = dogBean.getOwnerList(this);
+            this.ownerList.add(o);
+        } else {
+            this.ownerList.add(o);
+        }
     }
 
     @Override

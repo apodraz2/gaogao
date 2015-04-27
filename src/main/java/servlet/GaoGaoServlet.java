@@ -54,8 +54,8 @@ public class GaoGaoServlet extends HttpServlet {
             out.println("<h1>Servlet GaoGaoServlet at " + request.getContextPath() + "</h1>");
             dogBean.createDog("Denver", "04/09/1986");
             out.println("Created dog");
-            ownerBean.createOwner("apodra86@gmail.com", "Sue22sue");
-            out.println("Created owner");
+            //ownerBean.createOwner("apodra86@gmail.com", "Sue22sue");
+            //out.println("Created owner");
             
             List<Dog> dogs = dogBean.getDogList();
             if(dogs != null) out.println(true);
@@ -65,6 +65,16 @@ public class GaoGaoServlet extends HttpServlet {
                 out.println("Dog exists with info: " );
                 out.println(dog.toString());
                 out.println("</p>");
+                List<Owner> dogOwners = dogBean.getOwnerList(dog);
+                for (Owner o : dogOwners) {
+                    out.println("<p>");
+                    out.println("Dog owner exists with info: ");
+                    out.println(o.toString());
+                    out.println("<p>");
+                            
+                }
+                
+                
             }
             
             List<Owner> owners = ownerBean.getOwnerList();
@@ -73,7 +83,9 @@ public class GaoGaoServlet extends HttpServlet {
                 out.println("Owner exists with info: ");
                 out.println(owner.toString());
                 out.println("</p>");
+                
             }
+            
             
             out.println("</body>");
             out.println("</html>");

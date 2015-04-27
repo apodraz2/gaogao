@@ -26,7 +26,20 @@ public class OwnerBean {
         em.persist(owner);
     }
     
+    //Returns all owners
     public List<Owner> getOwnerList() {
         return em.createQuery("select o from Owner o").getResultList();
+    }
+    
+    //Need to write statement to return all dogs assigned to the owner
+    public List<Dog> getDogList(Owner o) {
+        //TODO
+        return null;
+    } 
+    
+    //Need to write statement to add a dog to the owner's dog list
+    public void addDog(Dog d) {
+        //TODO
+        
     }
 }

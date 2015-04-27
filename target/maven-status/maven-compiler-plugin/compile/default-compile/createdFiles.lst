@@ -4,6 +4,7 @@ com/gaogao/scheduler/gaogaopractice/Event_.class
 com/gaogao/scheduler/gaogaopractice/Dog.class
 com/gaogao/scheduler/gaogaopractice/Dog_.class
 com/gaogao/scheduler/gaogaopractice/Owner.class
+com/gaogao/scheduler/gaogaopractice/EventBean.class
 servlet/GaoGaoServlet.class
 com/gaogao/scheduler/gaogaopractice/Event.class
 com/gaogao/scheduler/gaogaopractice/OwnerBean.class
