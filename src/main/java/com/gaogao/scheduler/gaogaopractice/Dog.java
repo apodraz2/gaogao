@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Temporal;
 
 /**
@@ -32,16 +34,15 @@ import javax.persistence.Temporal;
 
 @NamedQueries({
     @NamedQuery(name=Dog.DOG_QUERY_ALL, 
-        query="select d from Dog d")
+        query="select d from Dog d"),
+    
 })
 
 public class Dog implements Serializable {
     public static final String DOG_QUERY_ALL = "Dog.findAll";
+    public static final String OWNERS = "Dog.OWNERS";
     
     private static final long serialVersionUID = 1L;
-    
-    @EJB
-    private DogBean dogBean;
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -111,13 +112,14 @@ public class Dog implements Serializable {
         this.id = id;
     }
     
-    public void addOwner(Owner o) {
-        if(this.ownerList == null) {
-            this.ownerList = dogBean.getOwnerList(this);
-            this.ownerList.add(o);
-        } else {
-            this.ownerList.add(o);
-        }
+    public void setOwners(List<Owner> owners) {
+        this.ownerList = owners;
+    }
+    
+    public List<Owner> getOwners() {
+        
+        
+        return this.ownerList;
     }
 
     @Override

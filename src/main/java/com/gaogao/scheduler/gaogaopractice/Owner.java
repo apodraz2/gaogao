@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -34,6 +35,7 @@ public class Owner implements Serializable {
     )**/
     
     @ManyToMany
+    @JoinTable(name = "OWNER_DOG")
     private List<Dog> dogList;
     
     Owner() {}
@@ -43,12 +45,28 @@ public class Owner implements Serializable {
         this.password = password;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
     public String getEmail() {
         return this.email;
     }
-
-    public void setId(String email) {
-        this.email = email;
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public String getPassword() {
+        return this.password;
+    }
+    
+    public List<Dog> getDogList() {
+        return this.dogList;
+    }
+    
+    public void setDogList(List<Dog> dogs) {
+        this.dogList = dogs;
     }
 
     @Override

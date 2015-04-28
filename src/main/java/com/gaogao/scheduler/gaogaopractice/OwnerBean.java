@@ -24,6 +24,7 @@ public class OwnerBean {
     public void createOwner(String email, String password) {
         Owner owner = new Owner(email, password);
         em.persist(owner);
+        em.flush();
     }
     
     //Returns all owners
@@ -34,12 +35,14 @@ public class OwnerBean {
     //Need to write statement to return all dogs assigned to the owner
     public List<Dog> getDogList(Owner o) {
         //TODO
-        return null;
+        return o.getDogList();
     } 
     
     //Need to write statement to add a dog to the owner's dog list
-    public void addDog(Dog d) {
+    public void addDog(Dog d, Owner o) {
         //TODO
-        
+        o.getDogList().add(d);
+        em.merge(o);
+        em.flush();
     }
 }

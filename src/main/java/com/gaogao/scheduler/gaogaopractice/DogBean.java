@@ -52,6 +52,7 @@ public class DogBean {
         
         
         em.persist(dog);
+        //em.flush();
     }
     
     //returns all dogs
@@ -62,12 +63,17 @@ public class DogBean {
     //Need to create statement to get all owners assigned to dog
     public List<Owner> getOwnerList(Dog d) {
         //TODO
-        return em.createQuery("select o from OWNER_DOG o").getResultList();
+        
+        return d.getOwners();
     }
     
     //Need to create SQL statement to add owner to the dog
-    public void addOwner(Owner o) {
+    public void addOwner(Owner o, Dog d) {
         //TODO
+        
+        d.getOwners().add(o);
+        em.merge(d);
+        em.flush();
         
     }
     
