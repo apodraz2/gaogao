@@ -77,14 +77,40 @@ public class DogBean {
         
     }
     
+    public void removeOwner(String username, Dog d) {
+        
+        for(Owner o : d.getOwners()) {
+            if(username.equals(o.getEmail())) {
+                d.getOwners().remove(o);
+            }
+        }
+        
+        em.merge(d);
+        em.flush();
+    }
+    
     //Statement to return all events assigned to that dog
     public List<Event> getEventList(Dog d) {
         //TODO
-        return null;
+        return d.getEvents();
     }
     
     //Statement to add event to dog
-    public void addEvent(Event e) {
+    public void addEvent(Event e, Dog d) {
         //TODO
+        d.getEvents().add(e);
+        em.merge(d);
+        em.flush();
+    }
+    
+    public void removeEvent(Event e, Dog d) {
+        for (Event event : d.getEvents()) {
+            if(e.equals(event)) {
+                d.getEvents().remove(event);
+            }
+        }
+        
+        em.merge(d);
+        em.flush();
     }
 }

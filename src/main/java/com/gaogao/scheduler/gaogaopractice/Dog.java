@@ -121,6 +121,14 @@ public class Dog implements Serializable {
         
         return this.ownerList;
     }
+    
+    public void setEvents(List<Event> events) {
+        this.eventList = events;
+    }
+    
+    public List<Event> getEvents() {
+        return this.eventList;
+    }
 
     @Override
     public int hashCode() {
