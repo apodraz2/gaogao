@@ -36,7 +36,7 @@ public class DogBean {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     
-    public void createDog(String name, String birthday) {
+    public Dog createDog(String name, String birthday) {
         Dog dog = new Dog();
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -49,10 +49,9 @@ public class DogBean {
         }
         
         dog.setName(name);
-        
-        
         em.persist(dog);
         //em.flush();
+        return dog;
     }
     
     //returns all dogs

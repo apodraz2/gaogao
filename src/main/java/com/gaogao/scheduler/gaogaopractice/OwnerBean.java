@@ -6,7 +6,11 @@
 package com.gaogao.scheduler.gaogaopractice;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,9 +19,16 @@ import javax.persistence.PersistenceContext;
  * @author adampodraza
  */
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class OwnerBean {
     @PersistenceContext(unitName="gaogaoPracticePU")
     private EntityManager em;
+    
+    @EJB
+    private DogBean dogBean;
+    
+    @EJB
+    private EventBean eventBean;
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -39,10 +50,56 @@ public class OwnerBean {
     } 
     
     //Need to write statement to add a dog to the owner's dog list
-    public void addDog(Dog d, Owner o) {
+    public void addNewDog(Owner o, String name, String birthday) {
         //TODO
+        Dog d = dogBean.createDog(name, birthday);
+        em.merge(d);
         o.getDogList().add(d);
+        dogBean.addOwner(o, d);
         em.merge(o);
+        
         em.flush();
+    }
+    
+    public void addExistingDog(Owner o, Dog d) {
+        o.getDogList().add(d);
+        dogBean.addOwner(o, d);
+        em.merge(o);
+        em.merge(d);
+        em.flush();
+    }
+    
+    public void removeDog(Dog d, Owner o) {
+        if(o.getDogList().contains(d)) {
+            o.getDogList().remove(d);
+            d.getOwners().remove(o);
+            if(d.getOwners().size() == 0) {
+                em.remove(d);
+            }
+            em.merge(o);
+            em.merge(d);
+            em.flush();
+        }
+    }
+    
+    public void addEvent(Owner o, String description, String date, String name) {
+        Dog dog = null;
+        for(Dog d : o.getDogList()) {
+            if(name.equals(d.getName())) {
+                dog = d;
+            }
+        }
+        
+        if(dog != null) {
+            Event e = eventBean.createEvent(description, date, dog);
+            
+            dogBean.addEvent(e, dog);
+            em.merge(e);
+            em.merge(dog);
+            em.flush();
+        } else {
+            throw new NoSuchElementException("No dog exists with that name");
+        }
+        
     }
 }
