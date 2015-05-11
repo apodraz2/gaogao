@@ -8,6 +8,7 @@ package servlet;
 
 import com.gaogao.scheduler.gaogaopractice.Dog;
 import com.gaogao.scheduler.gaogaopractice.DogBean;
+import com.gaogao.scheduler.gaogaopractice.Event;
 import com.gaogao.scheduler.gaogaopractice.Owner;
 import com.gaogao.scheduler.gaogaopractice.OwnerBean;
 import java.io.IOException;
@@ -52,47 +53,19 @@ public class GaoGaoServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet GaoGaoServlet at " + request.getContextPath() + "</h1>");
-            Dog d = dogBean.createDog("Denver", "04/09/1986");
-            out.println("Created dog");
-            ownerBean.createOwner("apodra86@gmail.com", "Sue22sue");
-            out.println("Created owner");
-            List<Owner> owners = ownerBean.getOwnerList();
-            if(owners != null){
-                out.println();
-            } else {
-                out.println(false);
-            }
-            List<Dog> dogs = dogBean.getDogList();
-            if(dogs != null) out.println(true);
             
-            for (Dog dog : dogs) {
-                out.println("<p>");
-                dogBean.addOwner(owners.get(0), dog);
-                ownerBean.addExistingDog(owners.get(0), dog);
-                out.println("Dog exists with info: " );
-                out.println(dog.getName());
-                out.println("</p>");
-                List<Owner> dogOwners = dogBean.getOwnerList(dog);
-                for (Owner o : dogOwners) {
-                    out.println("<p>");
-                    out.println("Dog owner exists with info: ");
-                    out.println(o.toString());
-                    out.println("<p>");
-                            
-                }
-                
-                
-            }
+            //Create a new owner
+            Owner o = ownerBean.createOwner("wususa@gmail.com", "Sue22sue");
             
+            //Add a new dog to the new owner
+            ownerBean.addNewDog(o, "Denver", "04/09/1986");
             
-            for(Owner owner : owners) {
-                out.println("<p>");
-                out.println("Owner exists with info: ");
-                out.println(owner.toString());
-                out.println("</p>");
-                
-            }
+            //Add a new event to the dog
+            ownerBean.addEvent(o, "Walk Denver", "11/05/2015", "Denver");
             
+            List <Event> events = ownerBean.getDogList(o).get(0).getEvents();
+            
+            System.out.println("I need to " + events.get(0).getDescription() + " on " + events.get(0).getDate());
             
             out.println("</body>");
             out.println("</html>");

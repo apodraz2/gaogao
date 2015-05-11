@@ -54,7 +54,7 @@ public class Dog implements Serializable {
     private Date birthday;
     
     @OneToMany(cascade = CascadeType.ALL, 
-                mappedBy = "dogId", 
+                mappedBy = "dog", 
                 fetch= FetchType.LAZY
     )
     private List<Event> eventList;

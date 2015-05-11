@@ -7,10 +7,12 @@ package com.gaogao.scheduler.gaogaopractice;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
@@ -32,8 +34,8 @@ public class Event implements Serializable {
     
     private boolean completed; 
     
-    @ManyToOne(optional = true)
-    private Dog dogId;
+    @JoinColumn(name="DOG_ID")
+    private Dog dog;
     
     Event(){ this.id = System.currentTimeMillis(); }
 
@@ -62,11 +64,11 @@ public class Event implements Serializable {
     }
 
     public Dog getDogId() {
-        return dogId;
+        return dog;
     }
 
     public void setDogId(Dog dogId) {
-        this.dogId = dogId;
+        this.dog = dogId;
     }
     
     public Date getDate() {

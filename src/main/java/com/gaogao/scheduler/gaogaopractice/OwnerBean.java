@@ -32,10 +32,11 @@ public class OwnerBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    public void createOwner(String email, String password) {
+    public Owner createOwner(String email, String password) {
         Owner owner = new Owner(email, password);
         em.persist(owner);
         em.flush();
+        return owner;
     }
     
     //Returns all owners

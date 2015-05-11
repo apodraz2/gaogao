@@ -19,9 +19,8 @@ public class BeanTest extends TestCase{
     private DogBean dog;
     
     protected void setUp() throws Exception {
-        //EJBContainer ejbContainer = EJBContainer.createEJBContainer();
-
-        //Object object = ejbContainer.getContext().lookup("java:global/simple-stateless/OwnerBean");
+        user = new OwnerBean();
+        dog = new DogBean();
     }
     
     public void addUserTest() {

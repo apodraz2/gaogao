@@ -6,14 +6,14 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-05-09T11:03:29")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-05-11T08:55:11")
 @StaticMetamodel(Event.class)
 public class Event_ { 
 
     public static volatile SingularAttribute<Event, Date> date;
-    public static volatile SingularAttribute<Event, Dog> dogId;
     public static volatile SingularAttribute<Event, String> description;
     public static volatile SingularAttribute<Event, Long> id;
     public static volatile SingularAttribute<Event, Boolean> completed;
+    public static volatile SingularAttribute<Event, Dog> dog;
 
 }
