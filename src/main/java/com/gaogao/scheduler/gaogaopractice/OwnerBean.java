@@ -21,6 +21,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class OwnerBean {
+    
     @PersistenceContext(unitName="gaogaoPracticePU")
     private EntityManager em;
     
@@ -51,6 +52,7 @@ public class OwnerBean {
     } 
     
     //Need to write statement to add a dog to the owner's dog list
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addNewDog(Owner o, String name, String birthday) {
         //TODO
         Dog d = dogBean.createDog(name, birthday);
@@ -62,6 +64,7 @@ public class OwnerBean {
         em.flush();
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addExistingDog(Owner o, Dog d) {
         o.getDogList().add(d);
         dogBean.addOwner(o, d);
@@ -70,6 +73,7 @@ public class OwnerBean {
         em.flush();
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeDog(Dog d, Owner o) {
         if(o.getDogList().contains(d)) {
             o.getDogList().remove(d);
@@ -83,6 +87,7 @@ public class OwnerBean {
         }
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addEvent(Owner o, String description, String date, String name) {
         Dog dog = null;
         for(Dog d : o.getDogList()) {

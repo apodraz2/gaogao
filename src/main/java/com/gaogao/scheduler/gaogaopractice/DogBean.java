@@ -13,6 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.HeuristicMixedException;
@@ -35,7 +37,7 @@ public class DogBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Dog createDog(String name, String birthday) {
         Dog dog = new Dog();
         
@@ -67,6 +69,7 @@ public class DogBean {
     }
     
     //Need to create SQL statement to add owner to the dog
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addOwner(Owner o, Dog d) {
         //TODO
         
@@ -76,6 +79,7 @@ public class DogBean {
         
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeOwner(String username, Dog d) {
         
         for(Owner o : d.getOwners()) {
@@ -95,6 +99,7 @@ public class DogBean {
     }
     
     //Statement to add event to dog
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addEvent(Event e, Dog d) {
         //TODO
         d.getEvents().add(e);
@@ -102,6 +107,7 @@ public class DogBean {
         em.flush();
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeEvent(Event e, Dog d) {
         for (Event event : d.getEvents()) {
             if(e.equals(event)) {
