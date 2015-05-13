@@ -111,13 +111,11 @@ public class OwnerBean {
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void removeEvent(Owner o, Dog d, Event e){
-        if(o.getDogList().contains(d)) {
+    public void removeEvent(Dog d, Event e){
+        if(d.getEvents().contains(e)) {
             d.getEvents().remove(e);
             em.merge(d);
-            em.merge(e);
-            em.remove(e);
-            em.merge(d);
+            //em.remove(e);
             em.flush();
         }
     }

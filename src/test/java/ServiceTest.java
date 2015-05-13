@@ -151,7 +151,7 @@ public class ServiceTest {
         
         assertEquals(event.getDescription(), "Walk him");
         
-        ownerBean.removeEvent(o, d, event);
+        ownerBean.removeEvent(d, event);
         
         assertTrue(d.getEvents().isEmpty());
         
