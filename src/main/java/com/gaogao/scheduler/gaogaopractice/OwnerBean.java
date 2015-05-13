@@ -75,12 +75,13 @@ public class OwnerBean {
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeDog(Dog d, Owner o) {
+        
         if(o.getDogList().contains(d)) {
+            
             o.getDogList().remove(d);
+            
             d.getOwners().remove(o);
-            if(d.getOwners().size() == 0) {
-                em.remove(d);
-            }
+            
             em.merge(o);
             em.merge(d);
             em.flush();
