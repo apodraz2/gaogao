@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -18,6 +20,7 @@ import javax.persistence.PersistenceContext;
  * @author adampodraza
  */
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class EventBean {
     
     @PersistenceContext(unitName="gaogaoPracticePU")
@@ -43,6 +46,8 @@ public class EventBean {
         
         return event;
     }
+    
+    
     
     public List<Event> getEventList() {
         return em.createQuery("select e from Event e").getResultList();

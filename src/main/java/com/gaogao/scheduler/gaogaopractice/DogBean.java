@@ -29,6 +29,7 @@ import javax.transaction.UserTransaction;
  * @author adampodraza
  */
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class DogBean {
     
     @PersistenceContext(unitName="gaogaoPracticePU")
@@ -107,15 +108,5 @@ public class DogBean {
         em.flush();
     }
     
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void removeEvent(Event e, Dog d) {
-        for (Event event : d.getEvents()) {
-            if(e.equals(event)) {
-                d.getEvents().remove(event);
-            }
-        }
-        
-        em.merge(d);
-        em.flush();
-    }
+    
 }

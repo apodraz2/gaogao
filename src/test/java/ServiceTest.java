@@ -137,7 +137,23 @@ public class ServiceTest {
     //This hasn't been implemented yet 
     @Test
     public void removeEvent() throws Exception {
+        Owner o = ownerBean.createOwner(email + "c", password + "3");
+        ownerBean.addNewDog(o, "Denver", "12/05/2015");
         
+        assertNotNull(o.getDogList().get(0));
+        
+        ownerBean.addEvent(o, "Walk him", "13/5/2015", "Denver");
+        Dog d = o.getDogList().get(0);
+        
+        Event event = d.getEvents().get(0);
+        
+        assertNotNull(event);
+        
+        assertEquals(event.getDescription(), "Walk him");
+        
+        ownerBean.removeEvent(o, d, event);
+        
+        assertTrue(d.getEvents().isEmpty());
         
     }
     
