@@ -7,6 +7,7 @@ package com.gaogao.scheduler.gaogaopractice;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -41,9 +42,11 @@ public class OwnerBean {
     }
     
     //Returns all owners
+    @RolesAllowed("admin")
     public List<Owner> getOwnerList() {
         return em.createQuery("select o from Owner o").getResultList();
     }
+    
     
     //Need to write statement to return all dogs assigned to the owner
     public List<Dog> getDogList(Owner o) {
@@ -64,6 +67,7 @@ public class OwnerBean {
         em.flush();
     }
     
+    
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addExistingDog(Owner o, Dog d) {
         o.getDogList().add(d);
@@ -72,6 +76,7 @@ public class OwnerBean {
         em.merge(d);
         em.flush();
     }
+    
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeDog(Dog d, Owner o) {
@@ -87,6 +92,7 @@ public class OwnerBean {
             em.flush();
         }
     }
+    
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addEvent(Owner o, String description, String date, String name) {
@@ -109,6 +115,7 @@ public class OwnerBean {
         }
         
     }
+    
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeEvent(Dog d, Event e){
