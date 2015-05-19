@@ -133,8 +133,7 @@ public class ServiceTest {
         assertEquals(event.getDescription(), "Walk him");
     }
     
-    //TODO
-    //This hasn't been implemented yet 
+    //TODO 
     @Test
     public void removeEvent() throws Exception {
         Owner o = ownerBean.createOwner(email + "c", password + "3");

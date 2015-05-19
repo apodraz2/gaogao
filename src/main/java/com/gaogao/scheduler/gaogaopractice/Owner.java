@@ -13,6 +13,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -22,6 +24,7 @@ import javax.persistence.OneToMany;
  * @author adampodraza
  */
 @Entity
+@Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
 public class Owner implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
