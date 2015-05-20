@@ -6,21 +6,34 @@ package servlet;
  * and open the template in the editor.
  */
 
-import com.gaogao.scheduler.gaogaopractice.Dog;
-import com.gaogao.scheduler.gaogaopractice.DogBean;
-import com.gaogao.scheduler.gaogaopractice.Event;
-import com.gaogao.scheduler.gaogaopractice.Owner;
-import com.gaogao.scheduler.gaogaopractice.OwnerBean;
+import com.gaogao.scheduler.messaging.OwnerRequest;
+import com.gaogao.scheduler.messaging.OwnerRequest.OwnerOperation;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.ejb.EJB;
+import java.io.StringWriter;
+import static java.lang.System.out;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.jms.QueueConnectionFactory;
+
+import javax.annotation.Resource;
+
+import javax.jms.JMSConsumer;
+import javax.jms.JMSContext;
+import javax.jms.JMSException;
+import javax.jms.Queue;
+import javax.jms.TemporaryQueue;
+import javax.jms.TextMessage;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
 import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 /**
  *
@@ -28,11 +41,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class GaoGaoServlet extends HttpServlet {
 
-    @EJB
-    private DogBean dogBean;
-    
-    @EJB
-    private OwnerBean ownerBean;
+    @Resource(mappedName = "jms/CalculatorQ")
+    private Queue queue;
+    @Resource(mappedName = "jms/ConnectionFactory")    
+    private QueueConnectionFactory queueConnectionFactory;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,12 +54,54 @@ public class GaoGaoServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws JAXBException
+     * @throws JMSException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, JAXBException, JMSException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String op = request.getParameter("operation");
+            
+            OwnerOperation operation = null;
+            
+            for(OwnerOperation o : OwnerOperation.values()) {
+                if(op.equals(o.toString())) {
+                    operation = o;
+                }
+            }
+            
+            
+            OwnerRequest or = new OwnerRequest(email, password, operation);
+            
+            StringWriter writer = new StringWriter();
+
+
+            Marshaller m = JAXBContext.newInstance(OwnerRequest.class).createMarshaller();
+            m.marshal(or, writer);
+            String answer = "Don't know";
+            
+            try (JMSContext context = queueConnectionFactory.createContext()) {
+                TemporaryQueue replyQueue = context.createTemporaryQueue();
+                String msg = writer.toString();
+                
+                TextMessage requestMessage
+                        = context.createTextMessage();
+                
+                requestMessage.setJMSReplyTo(replyQueue);
+                
+                System.out.println("Request: " + msg);
+                context.createProducer().send(
+                        queue, requestMessage);
+
+                JMSConsumer consumer = context.createConsumer(replyQueue);
+                answer = consumer.receiveBody(String.class);
+            }
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -56,22 +110,23 @@ public class GaoGaoServlet extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet GaoGaoServlet at " + request.getContextPath() + "</h1>");
             
-            //Create a new owner
-            Owner o = ownerBean.createOwner("wususa@gmail.com", "Sue22sue");
-            
-            //Add a new dog to the new owner
-            ownerBean.addNewDog(o, "Denver", "04/09/1986");
-            
-            //Add a new event to the dog
-            ownerBean.addEvent(o, "Walk Denver", "11/05/2015", "Denver");
-            
-            List <Event> events = ownerBean.getDogList(o).get(0).getEvents();
-            
-            System.out.println("I need to " + events.get(0).getDescription() + " on " + events.get(0).getDate());
+            out.println("<h1>");
+            out.print("Message sent: ");
+            out.println(writer.toString());
+            out.print("<p>");
+            out.print("Result is " + answer);
             
             out.println("</body>");
             out.println("</html>");
+        }catch (Exception  e) {
+            out.println("<html>");
+            out.println("<h1>");
+            out.println("Error processing request: " + e.toString());
+            out.println("</html>");
+            throw new RuntimeException(e);
         }
+        
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -86,7 +141,13 @@ public class GaoGaoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (JAXBException ex) {
+            Logger.getLogger(GaoGaoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JMSException ex) {
+            Logger.getLogger(GaoGaoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -100,7 +161,13 @@ public class GaoGaoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (JAXBException ex) {
+            Logger.getLogger(GaoGaoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JMSException ex) {
+            Logger.getLogger(GaoGaoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
