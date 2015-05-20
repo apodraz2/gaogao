@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
-import com.gaogao.scheduler.gaogaopractice.Dog;
-import com.gaogao.scheduler.gaogaopractice.DogBean;
-import com.gaogao.scheduler.gaogaopractice.Event;
-import com.gaogao.scheduler.gaogaopractice.Owner;
-import com.gaogao.scheduler.gaogaopractice.OwnerBean;
+import com.gaogao.scheduler.persistence.Dog;
+import com.gaogao.scheduler.persistence.DogBean;
+import com.gaogao.scheduler.persistence.Event;
+import com.gaogao.scheduler.persistence.Owner;
+import com.gaogao.scheduler.persistence.OwnerBean;
 import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;

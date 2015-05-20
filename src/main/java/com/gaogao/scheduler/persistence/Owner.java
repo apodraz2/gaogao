@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gaogao.scheduler.gaogaopractice;
+package com.gaogao.scheduler.persistence;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,11 +31,6 @@ public class Owner implements Serializable {
     private String email;
     
     private String password;
-    
-    /**@OneToMany(cascade = CascadeType.ALL, 
-                mappedBy = "ownerId", 
-                fetch= FetchType.LAZY
-    )**/
     
     @ManyToMany
     @JoinTable(name = "OWNER_DOG")

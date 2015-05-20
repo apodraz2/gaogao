@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gaogao.scheduler.gaogaopractice;
+package com.gaogao.scheduler.persistence;
 
 import java.util.List;
 import java.util.NoSuchElementException;
