@@ -37,7 +37,7 @@ public class Event implements Serializable {
     @JoinColumn(name="DOG_ID")
     private Dog dog;
     
-    Event(){ this.id = System.currentTimeMillis(); }
+    public Event(){ this.id = System.currentTimeMillis(); }
 
     public Long getId() {
         return id;

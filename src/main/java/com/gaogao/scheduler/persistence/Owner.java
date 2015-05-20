@@ -36,9 +36,9 @@ public class Owner implements Serializable {
     @JoinTable(name = "OWNER_DOG")
     private List<Dog> dogList;
     
-    Owner() {}
+    public Owner() {}
     
-    Owner(String email, String password) {
+    public Owner(String email, String password) {
         this.email = email;
         this.password = password;
     }

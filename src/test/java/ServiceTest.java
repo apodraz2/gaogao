@@ -5,10 +5,10 @@
  */
 
 import com.gaogao.scheduler.persistence.Dog;
-import com.gaogao.scheduler.persistence.DogBean;
+import com.gaogao.scheduler.beans.DogBean;
 import com.gaogao.scheduler.persistence.Event;
 import com.gaogao.scheduler.persistence.Owner;
-import com.gaogao.scheduler.persistence.OwnerBean;
+import com.gaogao.scheduler.beans.OwnerBean;
 import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -78,8 +78,6 @@ public class ServiceTest {
     
     @Test
     public void newUserTest() throws Exception {
-        
-        
         
         Owner o = ownerBean.createOwner(email, password);
         

@@ -41,7 +41,7 @@ import javax.xml.bind.Marshaller;
  */
 public class GaoGaoServlet extends HttpServlet {
 
-    @Resource(mappedName = "jms/CalculatorQ")
+    @Resource(mappedName = "jms/GaoGaoQ")
     private Queue queue;
     @Resource(mappedName = "jms/ConnectionFactory")    
     private QueueConnectionFactory queueConnectionFactory;
@@ -63,9 +63,9 @@ public class GaoGaoServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String op = request.getParameter("operation");
+            String email = "email";
+            String password = "password";
+            String op = "ADD_DOG";
             
             OwnerOperation operation = null;
             
