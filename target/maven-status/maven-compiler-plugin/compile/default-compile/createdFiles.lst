@@ -11,6 +11,5 @@ com/gaogao/scheduler/messaging/OwnerRequest.class
 com/gaogao/scheduler/persistence/Kennel_.class
 com/gaogao/scheduler/beans/DogBean.class
 com/gaogao/scheduler/persistence/Owner.class
-com/gaogao/scheduler/servlet/GaoGaoServlet.class
 com/gaogao/scheduler/persistence/Dog_.class
 com/gaogao/scheduler/persistence/Vet.class

@@ -2,9 +2,11 @@
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/messaging/OwnerRequest.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Event.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/beans/OwnerBean.java
+/Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/beans/GaoGaoMDB.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Owner.java
+/Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/servlet/GaoGaoJMSServlet.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/beans/DogBean.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Dog.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/beans/EventBean.java
-/Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/servlet/GaoGaoServlet.java
+/Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/ServiceProvider.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Vet.java

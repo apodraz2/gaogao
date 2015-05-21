@@ -39,7 +39,7 @@ import javax.xml.bind.Marshaller;
  *
  * @author adampodraza
  */
-public class GaoGaoServlet extends HttpServlet {
+public class GaoGaoJMSServlet extends HttpServlet {
 
     @Resource(mappedName = "jms/GaoGaoQ")
     private Queue queue;
@@ -144,9 +144,9 @@ public class GaoGaoServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (JAXBException ex) {
-            Logger.getLogger(GaoGaoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GaoGaoJMSServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JMSException ex) {
-            Logger.getLogger(GaoGaoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GaoGaoJMSServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -164,9 +164,9 @@ public class GaoGaoServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (JAXBException ex) {
-            Logger.getLogger(GaoGaoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GaoGaoJMSServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JMSException ex) {
-            Logger.getLogger(GaoGaoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GaoGaoJMSServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
