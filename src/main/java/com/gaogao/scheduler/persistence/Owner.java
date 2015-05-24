@@ -18,6 +18,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,6 +27,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
+@XmlRootElement
 public class Owner implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,6 +62,7 @@ public class Owner implements Serializable {
         return this.password;
     }
     
+    @XmlTransient
     public List<Dog> getDogList() {
         return this.dogList;
     }

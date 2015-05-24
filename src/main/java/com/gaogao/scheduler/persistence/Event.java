@@ -15,12 +15,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author adampodraza
  */
 @Entity
+@XmlRootElement
 public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

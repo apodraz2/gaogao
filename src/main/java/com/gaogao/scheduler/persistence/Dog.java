@@ -25,6 +25,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,6 +40,7 @@ import javax.persistence.Temporal;
     
 })
 
+@XmlRootElement
 public class Dog implements Serializable {
     public static final String DOG_QUERY_ALL = "Dog.findAll";
     public static final String OWNERS = "Dog.OWNERS";
@@ -127,6 +130,7 @@ public class Dog implements Serializable {
         return this.ownerList;
     }
 
+    @XmlTransient
     public List<ServiceProvider> getProviderList() {
         return providerList;
     }

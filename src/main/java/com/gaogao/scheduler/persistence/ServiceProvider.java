@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -20,6 +21,7 @@ import javax.persistence.JoinColumn;
  */
 @Entity
 @Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
+@XmlRootElement
 public abstract class ServiceProvider implements Serializable {
     private static final long serialVersionUID = 1L;
     

@@ -10,12 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author adampodraza
  */
 @Entity
+@XmlRootElement
 public class Kennel extends ServiceProvider {
     private String checkList;
 
