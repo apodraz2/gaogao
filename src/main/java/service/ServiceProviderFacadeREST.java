@@ -24,7 +24,7 @@ import javax.ws.rs.Produces;
  * @author adampodraza
  */
 @Stateless
-@Path("com.gaogao.scheduler.persistence.serviceprovider")
+@Path("/serviceprovider")
 public class ServiceProviderFacadeREST extends AbstractFacade<ServiceProvider> {
     @PersistenceContext(unitName = "gaogaoPracticePU")
     private EntityManager em;

@@ -90,7 +90,7 @@ public class GaoGaoJMSServlet extends HttpServlet {
                 String msg = writer.toString();
                 
                 TextMessage requestMessage
-                        = context.createTextMessage();
+                        = context.createTextMessage(msg);
                 
                 requestMessage.setJMSReplyTo(replyQueue);
                 

@@ -24,7 +24,7 @@ import javax.ws.rs.Produces;
  * @author adampodraza
  */
 @Stateless
-@Path("com.gaogao.scheduler.persistence.owner")
+@Path("/owner")
 public class OwnerFacadeREST extends AbstractFacade<Owner> {
     @PersistenceContext(unitName = "gaogaoPracticePU")
     private EntityManager em;

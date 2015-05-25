@@ -24,7 +24,7 @@ import javax.ws.rs.Produces;
  * @author adampodraza
  */
 @Stateless
-@Path("com.gaogao.scheduler.persistence.event")
+@Path("/event")
 public class EventFacadeREST extends AbstractFacade<Event> {
     @PersistenceContext(unitName = "gaogaoPracticePU")
     private EntityManager em;

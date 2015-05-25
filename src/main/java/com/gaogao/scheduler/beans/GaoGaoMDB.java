@@ -37,15 +37,20 @@ public class GaoGaoMDB implements MessageListener{
     @Override
     public void onMessage(Message message) {
         //To change body of generated methods, choose Tools | Templates.
-        
         OwnerRequest or = null;
         
-        try {
-            or = convert(((TextMessage)message).getText());
-            System.out.println(or.toString());
+        if (!(message == null)) {
+            try {
+                String m1 = ((TextMessage)message).getText();
+                System.out.println(m1);
+                or = convert(m1);
+                
             
-        } catch (JMSException x) {
+            } catch (JMSException x) {
             
+            }
+        } else {
+            System.out.println("No message");
         }
     }
 
@@ -53,15 +58,19 @@ public class GaoGaoMDB implements MessageListener{
     // "Insert Code > Add Business Method")
     
     private OwnerRequest convert (String xml) {
+        
         OwnerRequest or = null;
+        
+        
         
         try {
             JAXBContext context = JAXBContext.newInstance(OwnerRequest.class);
             Unmarshaller m = context.createUnmarshaller();
-            try (StringReader reader = new StringReader(xml)) {
+            
+            try(StringReader reader = new StringReader(xml)) {
                 or = (OwnerRequest) m.unmarshal(reader);
-                
             }
+            
         }catch (JAXBException ex) {
             
         }

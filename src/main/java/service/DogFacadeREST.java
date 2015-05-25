@@ -24,7 +24,7 @@ import javax.ws.rs.Produces;
  * @author adampodraza
  */
 @Stateless
-@Path("com.gaogao.scheduler.persistence.dog")
+@Path("/dog")
 public class DogFacadeREST extends AbstractFacade<Dog> {
     @PersistenceContext(unitName = "gaogaoPracticePU")
     private EntityManager em;
