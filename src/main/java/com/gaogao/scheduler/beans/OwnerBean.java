@@ -48,7 +48,7 @@ public class OwnerBean {
     }
     
     //Returns all owners
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     public List<Owner> getOwnerList() {
         return em.createQuery("select o from Owner o").getResultList();
     }

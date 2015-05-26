@@ -65,7 +65,7 @@ public class GaoGaoJMSServlet extends HttpServlet {
             
             String email = "email";
             String password = "password";
-            String op = "ADD_DOG";
+            String op = "CREATE_OWNER";
             
             OwnerOperation operation = null;
             

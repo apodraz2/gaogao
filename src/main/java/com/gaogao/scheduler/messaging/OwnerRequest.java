@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OwnerRequest implements Serializable{
     
-    public static enum OwnerOperation { ADD_DOG, ADD_EXISTING_DOG, REMOVE_DOG, ADD_EVENT, REMOVE_EVENT, CREATE_OWNER, REMOVE_OWNER};
+    public static enum OwnerOperation { CREATE_OWNER, REMOVE_OWNER};
     
     @XmlElement(name="email")
     private String email;

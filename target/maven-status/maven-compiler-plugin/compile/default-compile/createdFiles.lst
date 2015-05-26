@@ -11,6 +11,7 @@ com/gaogao/scheduler/beans/GaoGaoMDB.class
 com/gaogao/scheduler/persistence/Kennel_.class
 service/KennelFacadeREST.class
 com/gaogao/scheduler/persistence/Dog_.class
+com/gaogao/scheduler/beans/GaoGaoMDB$1.class
 com/gaogao/scheduler/persistence/Dog.class
 service/ApplicationConfig.class
 com/gaogao/scheduler/servlet/GaoGaoJMSServlet.class
@@ -22,6 +23,7 @@ com/gaogao/scheduler/persistence/Vet_.class
 com/gaogao/scheduler/messaging/OwnerRequest.class
 com/gaogao/scheduler/beans/DogBean.class
 com/gaogao/scheduler/persistence/Owner.class
+com/gaogao/scheduler/messaging/AddDogRequest.class
 com/gaogao/scheduler/persistence/Vet.class
 service/ServiceProviderFacadeREST.class
 service/VetFacadeREST.class

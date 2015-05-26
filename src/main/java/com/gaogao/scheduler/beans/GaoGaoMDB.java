@@ -6,10 +6,12 @@
 package com.gaogao.scheduler.beans;
 
 import com.gaogao.scheduler.messaging.OwnerRequest;
+import com.gaogao.scheduler.persistence.Owner;
 import java.io.StringReader;
 import java.util.logging.Level;
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
+import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.ejb.Stateless;
 import javax.jms.JMSException;
@@ -31,6 +33,9 @@ activationConfig = {
      propertyName = "destinationType", propertyValue = "javax.jms.Queue")})
 public class GaoGaoMDB implements MessageListener{
     
+    @EJB
+    OwnerBean ownerBean;
+    
     //@Resource(mappedName = "jms/ConnectionFactory")    
     //private QueueConnectionFactory queueConnectionFactory;
 
@@ -38,13 +43,26 @@ public class GaoGaoMDB implements MessageListener{
     public void onMessage(Message message) {
         //To change body of generated methods, choose Tools | Templates.
         OwnerRequest or = null;
+        Owner currentOwner = null;
         
         if (!(message == null)) {
             try {
                 String m1 = ((TextMessage)message).getText();
-                System.out.println(m1);
+                
                 or = convert(m1);
                 
+                switch (or.getOperation()) {
+                    
+                    case CREATE_OWNER:
+                        //TODO
+                        ownerBean.createOwner(or.getEmail(), or.getPassword());
+                        break;
+                    case REMOVE_OWNER:
+                        //TODO
+                        
+                        break;
+                        
+                }
             
             } catch (JMSException x) {
             
