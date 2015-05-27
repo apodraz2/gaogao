@@ -63,8 +63,9 @@ public class GaoGaoJMSServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            String email = "email";
-            String password = "password";
+            String email = request.getParameter("email");
+            
+            String password = request.getParameter("password");
             String op = "CREATE_OWNER";
             
             OwnerOperation operation = null;

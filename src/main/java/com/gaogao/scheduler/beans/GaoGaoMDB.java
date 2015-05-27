@@ -14,6 +14,8 @@ import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.ejb.Stateless;
+import javax.jms.Destination;
+import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -36,8 +38,8 @@ public class GaoGaoMDB implements MessageListener{
     @EJB
     OwnerBean ownerBean;
     
-    //@Resource(mappedName = "jms/ConnectionFactory")    
-    //private QueueConnectionFactory queueConnectionFactory;
+    @Resource(mappedName = "jms/ConnectionFactory")    
+    private QueueConnectionFactory queueConnectionFactory;
 
     @Override
     public void onMessage(Message message) {
@@ -55,13 +57,26 @@ public class GaoGaoMDB implements MessageListener{
                     
                     case CREATE_OWNER:
                         //TODO
-                        ownerBean.createOwner(or.getEmail(), or.getPassword());
+                        currentOwner = ownerBean.createOwner(or.getEmail(), or.getPassword());
                         break;
                     case REMOVE_OWNER:
                         //TODO
                         
                         break;
                         
+                }
+                
+                Destination replyDestination = message.getJMSReplyTo();
+                
+                try (JMSContext context = queueConnectionFactory.createContext()) {
+
+                    // prepare response 
+                    TextMessage replyMessage
+                            = context.createTextMessage("" + currentOwner);
+                    replyMessage.setJMSCorrelationID(message.getJMSMessageID());
+
+                    // send response 
+                    context.createProducer().send(replyDestination, replyMessage);
                 }
             
             } catch (JMSException x) {
