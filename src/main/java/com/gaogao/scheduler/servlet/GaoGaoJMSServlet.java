@@ -112,10 +112,9 @@ public class GaoGaoJMSServlet extends HttpServlet {
             out.println("<h1>Servlet GaoGaoServlet at " + request.getContextPath() + "</h1>");
             
             out.println("<h1>");
-            out.print("Message sent: ");
-            out.println(writer.toString());
+            
             out.print("<p>");
-            out.print("Result is " + answer);
+            
             
             out.println("</body>");
             out.println("</html>");
