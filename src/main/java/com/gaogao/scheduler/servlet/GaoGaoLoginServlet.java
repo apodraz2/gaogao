@@ -5,8 +5,12 @@
  */
 package com.gaogao.scheduler.servlet;
 
+import com.gaogao.scheduler.beans.OwnerBean;
+import com.gaogao.scheduler.persistence.Owner;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +21,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author adampodraza
  */
 public class GaoGaoLoginServlet extends HttpServlet {
+    
+    @EJB
+    OwnerBean ownerBean;
+    
+    RequestDispatcher dispatcher;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,7 +38,22 @@ public class GaoGaoLoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Owner o;
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
         
+        for(int i = 0; i < ownerBean.getOwnerList().size(); i++) {
+            if(ownerBean.getOwnerList().get(i).getEmail().equals(email) && ownerBean.getOwnerList().get(i).getPassword().equals(password)) {
+                System.out.println("Hello");
+                o = ownerBean.getOwnerList().get(i);
+                request.setAttribute("owner", o);
+                //dispatcher = getServletContext().getRequestDispatcher("dashboard.jsp");
+                //dispatcher.forward(request, response);
+            }
+        }
+        
+        dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+        dispatcher.forward(request, response);
         
     }
 
