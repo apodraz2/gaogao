@@ -5,7 +5,6 @@
  */
 
 import com.gaogao.scheduler.persistence.Dog;
-import com.gaogao.scheduler.beans.DogBean;
 import com.gaogao.scheduler.persistence.Event;
 import com.gaogao.scheduler.persistence.Owner;
 import com.gaogao.scheduler.beans.OwnerBean;
@@ -37,6 +36,8 @@ public class ServiceTest {
     
     private OwnerBean ownerBean;
     
+    private Owner o;
+    
     public ServiceTest() {
     }
     
@@ -64,6 +65,7 @@ public class ServiceTest {
     @Before
     public void setUp() throws NamingException {
         ownerBean = (OwnerBean)ec.getContext().lookup("java:global/classes/OwnerBean");
+        
     }
     
     @After
@@ -78,9 +80,7 @@ public class ServiceTest {
     
     @Test
     public void newUserTest() throws Exception {
-        
-        Owner o = ownerBean.createOwner(email, password);
-        
+        o = ownerBean.createOwner(email, password);
         assertNotNull(o);
         assertEquals(email, o.getEmail());
         assertEquals(password, o.getPassword());
@@ -91,7 +91,7 @@ public class ServiceTest {
        
        
        Owner o = ownerBean.createOwner(email + "t", password + "9");
-       ownerBean.addNewDog(o, "Denver", "12/05/2015");
+       ownerBean.addNewDog(o, "Denver", "12.05.2015");
        
        assertNotNull(o.getDogList().get(0));
        
@@ -103,7 +103,7 @@ public class ServiceTest {
     public void removeDog() throws Exception {
        
        Owner o = ownerBean.createOwner(email + "a", password + "1");
-       ownerBean.addNewDog(o, "Denver", "12/05/2015");
+       ownerBean.addNewDog(o, "Denver", "12.05.2015");
        
        assertNotNull(o.getDogList().get(0));
        Dog d = o.getDogList().get(0);
@@ -117,14 +117,14 @@ public class ServiceTest {
     @Test
     public void addEvent() throws Exception {
         Owner o = ownerBean.createOwner(email + "b", password + "2");
-        ownerBean.addNewDog(o, "Denver", "12/05/2015");
+        ownerBean.addNewDog(o, "Denver", "12.05.2015");
         
         assertNotNull(o.getDogList().get(0));
         
-        ownerBean.addEvent(o, "Walk him", "13/5/2015", "Denver");
+        ownerBean.addEvent(o, "Walk him", "13.5.2015", "Denver");
         Dog d = o.getDogList().get(0);
         
-        Event event = d.getEvents().get(0);
+        Event event = d.getEventList().get(0);
         
         assertNotNull(event);
         
@@ -135,14 +135,14 @@ public class ServiceTest {
     @Test
     public void removeEvent() throws Exception {
         Owner o = ownerBean.createOwner(email + "c", password + "3");
-        ownerBean.addNewDog(o, "Denver", "12/05/2015");
+        ownerBean.addNewDog(o, "Denver", "12.05.2015");
         
         assertNotNull(o.getDogList().get(0));
         
-        ownerBean.addEvent(o, "Walk him", "13/5/2015", "Denver");
+        ownerBean.addEvent(o, "Walk him", "13.5.2015", "Denver");
         Dog d = o.getDogList().get(0);
         
-        Event event = d.getEvents().get(0);
+        Event event = d.getEventList().get(0);
         
         assertNotNull(event);
         
@@ -150,8 +150,15 @@ public class ServiceTest {
         
         ownerBean.removeEvent(d, event);
         
-        assertTrue(d.getEvents().isEmpty());
+        assertTrue(d.getEventList().isEmpty());
         
+    }
+    
+    @Test
+    public void removeOwner() {
+        Owner o = ownerBean.createOwner(email + "d", password + "3");
+        
+        ownerBean.removeOwner(o);
     }
     
 }

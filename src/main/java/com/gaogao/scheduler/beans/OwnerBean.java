@@ -5,12 +5,12 @@
  */
 package com.gaogao.scheduler.beans;
 
-import com.gaogao.scheduler.beans.EventBean;
-import com.gaogao.scheduler.beans.DogBean;
+
 import com.gaogao.scheduler.persistence.Dog;
 import com.gaogao.scheduler.persistence.Event;
 import com.gaogao.scheduler.persistence.Owner;
 import com.gaogao.scheduler.persistence.Vet;
+import java.text.ParseException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import javax.annotation.security.RolesAllowed;
@@ -32,11 +32,6 @@ public class OwnerBean {
     @PersistenceContext(unitName="gaogaoPracticePU")
     private EntityManager em;
     
-    @EJB
-    private DogBean dogBean;
-    
-    @EJB
-    private EventBean eventBean;
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -62,12 +57,14 @@ public class OwnerBean {
     
     //Need to write statement to add a dog to the owner's dog list
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addNewDog(Owner o, String name, String birthday) {
+    public void addNewDog(Owner o, String name, String birthday) throws ParseException {
         //TODO
-        Dog d = dogBean.createDog(name, birthday);
+        Dog d = new Dog();
+        d.setName(name);
+        d.setBirthday(birthday);
         em.merge(d);
         o.getDogList().add(d);
-        dogBean.addOwner(o, d);
+        d.getOwnerList().add(o);
         em.merge(o);
         
         em.flush();
@@ -77,7 +74,7 @@ public class OwnerBean {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addExistingDog(Owner o, Dog d) {
         o.getDogList().add(d);
-        dogBean.addOwner(o, d);
+        d.getOwnerList().add(o);
         em.merge(o);
         em.merge(d);
         em.flush();
@@ -91,7 +88,7 @@ public class OwnerBean {
             
             o.getDogList().remove(d);
             
-            d.getOwners().remove(o);
+            d.getOwnerList().remove(o);
             
             em.merge(o);
             em.merge(d);
@@ -101,7 +98,7 @@ public class OwnerBean {
     
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addEvent(Owner o, String description, String date, String name) {
+    public void addEvent(Owner o, String description, String date, String name) throws ParseException {
         Dog dog = null;
         for(Dog d : o.getDogList()) {
             if(name.equals(d.getName())) {
@@ -110,9 +107,13 @@ public class OwnerBean {
         }
         
         if(dog != null) {
-            Event e = eventBean.createEvent(description, date, dog);
+            Event e = new Event();
+            e.setDescription(description);
+            e.setDate(date);
+            e.setDogId(dog);
             
-            dogBean.addEvent(e, dog);
+            
+            dog.getEventList().add(e);
             em.merge(e);
             em.merge(dog);
             em.flush();
@@ -125,12 +126,20 @@ public class OwnerBean {
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeEvent(Dog d, Event e){
-        if(d.getEvents().contains(e)) {
-            d.getEvents().remove(e);
+        if(d.getEventList().contains(e)) {
+            d.getEventList().remove(e);
             em.merge(d);
-            //em.remove(e);
+            e = em.merge(e);
+            em.remove(e);
             em.flush();
         }
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void removeOwner(Owner o) {
+        o = em.merge(o);
+        em.remove(o);
+        em.flush();
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

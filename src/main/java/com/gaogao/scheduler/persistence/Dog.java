@@ -7,6 +7,8 @@ package com.gaogao.scheduler.persistence;
 
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,8 +91,10 @@ public class Dog implements Serializable {
      *
      * @param birthday new value of birthday
      */
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setBirthday(String birthday) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date date = dateFormat.parse(birthday);
+        this.birthday = date;
     }
 
     /**
@@ -120,11 +124,11 @@ public class Dog implements Serializable {
         this.id = id;
     }
     
-    public void setOwners(List<Owner> owners) {
+    public void setOwnerList(List<Owner> owners) {
         this.ownerList = owners;
     }
     
-    public List<Owner> getOwners() {
+    public List<Owner> getOwnerList() {
         
         
         return this.ownerList;
@@ -139,11 +143,11 @@ public class Dog implements Serializable {
         this.providerList = providerList;
     }
     
-    public void setEvents(List<Event> events) {
+    public void setEventList(List<Event> events) {
         this.eventList = events;
     }
     
-    public List<Event> getEvents() {
+    public List<Event> getEventList() {
         return this.eventList;
     }
 

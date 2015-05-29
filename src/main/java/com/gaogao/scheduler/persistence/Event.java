@@ -6,6 +6,8 @@
 package com.gaogao.scheduler.persistence;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -77,8 +79,11 @@ public class Event implements Serializable {
         return this.date;
     }
     
-    public void setDate(Date d) {
-        this.date = d;
+    public void setDate(String d) throws ParseException {
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date date = dateFormat.parse(d);
+        this.date = date;
     }
 
     @Override
