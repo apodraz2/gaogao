@@ -92,7 +92,7 @@ public class Dog implements Serializable {
      * @param birthday new value of birthday
      */
     public void setBirthday(String birthday) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date date = dateFormat.parse(birthday);
         this.birthday = date;
     }

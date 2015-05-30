@@ -81,7 +81,7 @@ public class Event implements Serializable {
     
     public void setDate(String d) throws ParseException {
         
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date date = dateFormat.parse(d);
         this.date = date;
     }

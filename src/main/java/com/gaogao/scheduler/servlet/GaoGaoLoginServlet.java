@@ -44,16 +44,16 @@ public class GaoGaoLoginServlet extends HttpServlet {
         
         for(int i = 0; i < ownerBean.getOwnerList().size(); i++) {
             if(ownerBean.getOwnerList().get(i).getEmail().equals(email) && ownerBean.getOwnerList().get(i).getPassword().equals(password)) {
-                System.out.println("Hello");
+                
                 o = ownerBean.getOwnerList().get(i);
                 request.setAttribute("owner", o);
-                //dispatcher = getServletContext().getRequestDispatcher("dashboard.jsp");
-                //dispatcher.forward(request, response);
+                dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
+                dispatcher.forward(request, response);
             }
         }
         
-        dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
-        dispatcher.forward(request, response);
+        //dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+        //dispatcher.forward(request, response);
         
     }
 
