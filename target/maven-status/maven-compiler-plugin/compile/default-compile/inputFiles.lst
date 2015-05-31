@@ -7,6 +7,7 @@
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Dog.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/messaging/AddDogRequest.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Vet.java
+/Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/resource/DogResource.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/service/OwnerFacadeREST.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Event.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/service/ServiceProviderFacadeREST.java

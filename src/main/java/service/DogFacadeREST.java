@@ -7,6 +7,7 @@ package service;
 
 import com.gaogao.scheduler.beans.OwnerBean;
 import com.gaogao.scheduler.persistence.Dog;
+import com.gaogao.scheduler.persistence.Owner;
 import java.text.ParseException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -32,25 +33,24 @@ public class DogFacadeREST extends AbstractFacade<Dog> {
     @PersistenceContext(unitName = "gaogaoPracticePU")
     private EntityManager em;
     
+    @EJB
+    OwnerBean ownerBean;
+    
 
     public DogFacadeREST() {
         super(Dog.class);
     }
     
     @POST
-    public void createNewDog(@PathParam("name") String name, @PathParam("birthday") String birthday) throws ParseException {
-        Dog d = new Dog();
-        System.out.println(name);
-        d.setName(name);
-        System.out.println(birthday);
-        d.setBirthday(birthday);
-        create(d);
-    }
-
-    @POST
-    @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Dog entity) {
+    public void createNewDog(@PathParam("name") String name, @PathParam("birthday") String birthday) throws ParseException {
+        
+    }
+    
+    
+    @POST
+    @Consumes({"application/xml", "application/json"})
+    public void create(@PathParam("dog") Dog entity) {
         super.create(entity);
     }
 

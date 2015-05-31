@@ -47,6 +47,9 @@ public class GaoGaoLoginServlet extends HttpServlet {
                 
                 o = ownerBean.getOwnerList().get(i);
                 request.setAttribute("owner", o);
+                
+                
+                
                 dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
                 dispatcher.forward(request, response);
             }

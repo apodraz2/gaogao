@@ -10,6 +10,7 @@ com/gaogao/scheduler/beans/GaoGaoMDB.class
 com/gaogao/scheduler/persistence/Kennel_.class
 service/KennelFacadeREST.class
 com/gaogao/scheduler/persistence/Dog_.class
+resource/DogResource.class
 com/gaogao/scheduler/beans/GaoGaoMDB$1.class
 com/gaogao/scheduler/persistence/Dog.class
 service/ApplicationConfig.class
