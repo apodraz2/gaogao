@@ -2,15 +2,16 @@ service/AbstractFacade.class
 com/gaogao/scheduler/persistence/Event_.class
 com/gaogao/scheduler/persistence/Event.class
 com/gaogao/scheduler/persistence/Owner_.class
+data/EventData.class
 com/gaogao/scheduler/beans/OwnerBean.class
 service/DogFacadeREST.class
 com/gaogao/scheduler/persistence/ServiceProvider_.class
 com/gaogao/scheduler/messaging/OwnerRequest$OwnerOperation.class
+data/VetData.class
 com/gaogao/scheduler/beans/GaoGaoMDB.class
 com/gaogao/scheduler/persistence/Kennel_.class
 service/KennelFacadeREST.class
 com/gaogao/scheduler/persistence/Dog_.class
-resource/DogResource.class
 com/gaogao/scheduler/beans/GaoGaoMDB$1.class
 com/gaogao/scheduler/persistence/Dog.class
 service/ApplicationConfig.class
@@ -20,6 +21,8 @@ service/EventFacadeREST.class
 com/gaogao/scheduler/persistence/ServiceProvider.class
 com/gaogao/scheduler/persistence/Kennel.class
 com/gaogao/scheduler/persistence/Vet_.class
+data/DogData.class
+data/KennelData.class
 com/gaogao/scheduler/messaging/OwnerRequest.class
 com/gaogao/scheduler/servlet/GaoGaoLoginServlet.class
 com/gaogao/scheduler/persistence/Owner.class

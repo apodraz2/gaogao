@@ -31,20 +31,18 @@
             <% for (int i = 0; i < o.getDogList().size(); i ++) {%>
             <%= o.getDogList().size() %>  </br>
             
-            <%--<%= o.getDogList().get(i).toString() %> </br> --%>
+            <%= o.getDogList().get(i).toString() %> </br>
             
             <% } %>  
             
-            <% Dog d = new Dog(); %>
-            <% d.setName("Denver"); %>
-            <% d.setBirthday("25/12/2015"); %>
-            <% d.getOwnerList().add(o); %>
-            <% o.getDogList().add(d); %>
-            <% StringWriter writer = new StringWriter();
-
-            Marshaller m = JAXBContext.newInstance(Dog.class).createMarshaller();
-            m.marshal(d, writer); %> 
-            <a href="${pageContext.request.contextPath}/webresources/dog?"  >Add your dog</a>
+            <form action="/gaogao/webresources/dog/create" method="post">
+                <input type="text" name="name"/>
+                <input type="text" name="birthday"/>
+                <input type="hidden" name="owner" value= "<%= o.getEmail() %>"/> 
+                <input type="submit"/>
+                
+            </form>
+            
         </div>
     </body>
 </html>

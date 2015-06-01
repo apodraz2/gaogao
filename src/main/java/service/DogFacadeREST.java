@@ -10,18 +10,24 @@ import com.gaogao.scheduler.persistence.Dog;
 import com.gaogao.scheduler.persistence.Owner;
 import java.text.ParseException;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -30,6 +36,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("/dog")
 public class DogFacadeREST extends AbstractFacade<Dog> {
+    
     @PersistenceContext(unitName = "gaogaoPracticePU")
     private EntityManager em;
     
@@ -42,8 +49,23 @@ public class DogFacadeREST extends AbstractFacade<Dog> {
     }
     
     @POST
-    @Consumes({"application/xml", "application/json"})
-    public void createNewDog(@PathParam("name") String name, @PathParam("birthday") String birthday) throws ParseException {
+    @Path("/create")
+    public String createNewDog(@FormParam("name") String name, 
+                                 @FormParam("birthday") String birthday, 
+                                 @FormParam("owner") String email) throws ParseException {
+                
+        System.out.println(name);
+        System.out.println(email);
+        Owner o = null;
+        
+        for(Owner owner : ownerBean.getOwnerList()) {
+            if(owner.getEmail().equals(email)) {
+                o = owner;
+            }
+        }
+        
+        
+        return ownerBean.addNewDog(o, name, birthday).toString();
         
     }
     

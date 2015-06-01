@@ -57,7 +57,7 @@ public class OwnerBean {
     
     //Need to write statement to add a dog to the owner's dog list
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addNewDog(Owner o, String name, String birthday) throws ParseException {
+    public Dog addNewDog(Owner o, String name, String birthday) throws ParseException {
         //TODO
         Dog d = new Dog();
         d.setName(name);
@@ -68,6 +68,7 @@ public class OwnerBean {
         em.merge(o);
         
         em.flush();
+        return d;
     }
     
     
