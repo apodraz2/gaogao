@@ -4,6 +4,7 @@
     Author     : adampodraza
 --%>
 
+<%@page import="com.gaogao.scheduler.persistence.Event"%>
 <%@page import="javax.xml.bind.Marshaller"%>
 <%@page import="javax.xml.bind.JAXBContext"%>
 <%@page import="com.gaogao.scheduler.messaging.OwnerRequest"%>
@@ -26,23 +27,57 @@
         </div>
         
         <div>
-            <h2>Dog management console</h2>
-            
+            <h2>Dog Management Console</h2>
+            <div>
             <% for (int i = 0; i < o.getDogList().size(); i ++) {%>
-            <%= o.getDogList().size() %>  </br>
+            <br>
             
-            <%= o.getDogList().get(i).toString() %> </br>
+            Name: <%= o.getDogList().get(i).getName() %> </br>
             
             <% } %>  
+            </div>
+            <br>
+            <br>
             
+            <div>
+                <h2>Add Dog</h2>
             <form action="/gaogao/webresources/dog/create" method="post">
-                <input type="text" name="name"/>
-                <input type="text" name="birthday"/>
+                Please enter your dog's name: <br>
+                <input type="text" name="name"/> <br>
+                Please enter your dog's birthday: <br>
+                <input type="text" name="birthday"/> <br>
                 <input type="hidden" name="owner" value= "<%= o.getEmail() %>"/> 
                 <input type="submit"/>
                 
             </form>
-            
+            </div>
+                <div>
+                <h2>Event Management Console</h2>
+                <div>
+                    <% for(Dog d: o.getDogList()) { %>
+                        <%= d.getName() %>'s Scheduled Events:
+                        <% for(Event e: d.getEventList()) { %>
+                        <%= e.getDescription() %> Completed: <%= e.isCompleted() %>
+                        <% } %>
+                    <%} %>
+                </div>
+                
+                <h2>Add Event For Your Dog </h2>
+                <form action="/gaogao/webresources/event/create" method="post">
+                    Please enter your dog's name: <br>
+                    <input type="text" name="name" />
+                    <br>
+                    Please enter the event's description: <br>
+                    <input type="text" name="description"/>
+                    <br>
+                    Please enter the event's date: <br>
+                    <input type="text" name="date"/>
+                    <input type="hidden" name="owner" value= "<%= o.getEmail() %>"/>
+                    <br>
+                    <input type="submit"/>
+                    
+                </form>
+                </div>
         </div>
     </body>
 </html>

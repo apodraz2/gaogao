@@ -5,13 +5,20 @@
  */
 package service;
 
+import com.gaogao.scheduler.beans.OwnerBean;
+import com.gaogao.scheduler.beans.SingletonBean;
+import com.gaogao.scheduler.persistence.Dog;
 import com.gaogao.scheduler.persistence.Event;
+import com.gaogao.scheduler.persistence.Owner;
+import java.text.ParseException;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -28,9 +35,33 @@ import javax.ws.rs.Produces;
 public class EventFacadeREST extends AbstractFacade<Event> {
     @PersistenceContext(unitName = "gaogaoPracticePU")
     private EntityManager em;
+    
+    @EJB
+    OwnerBean ownerBean;
+    
+    @EJB
+    private SingletonBean singletonBean;
 
     public EventFacadeREST() {
         super(Event.class);
+    }
+    
+    @POST
+    @Path("/create")
+    public String createNewEvent(@FormParam("name") String dog, 
+                                 @FormParam("description") String description,
+                                 @FormParam("date") String date,
+                                 @FormParam("owner") String email) throws ParseException {
+        
+        System.out.println(dog);
+        System.out.println(description);
+        System.out.println(email);
+        
+        Owner o = singletonBean.getOwnerFromEmail(email);
+        Dog d = singletonBean.getDogFromEmailAndName(email, dog);
+        
+        return ownerBean.addEvent(o, description, date, d).toString();
+        
     }
 
     @POST

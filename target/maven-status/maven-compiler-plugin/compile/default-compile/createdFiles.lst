@@ -1,4 +1,5 @@
 service/AbstractFacade.class
+com/gaogao/scheduler/beans/SingletonBean.class
 com/gaogao/scheduler/persistence/Event_.class
 com/gaogao/scheduler/persistence/Event.class
 com/gaogao/scheduler/persistence/Owner_.class

@@ -50,7 +50,7 @@ public class OwnerBean {
     
     
     //Need to write statement to return all dogs assigned to the owner
-    public List<Dog> getDogList(Owner o) {
+    public static List<Dog> getDogList(Owner o) {
         //TODO
         return o.getDogList();
     } 
@@ -99,13 +99,8 @@ public class OwnerBean {
     
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addEvent(Owner o, String description, String date, String name) throws ParseException {
-        Dog dog = null;
-        for(Dog d : o.getDogList()) {
-            if(name.equals(d.getName())) {
-                dog = d;
-            }
-        }
+    public Event addEvent(Owner o, String description, String date, Dog dog) throws ParseException {
+        
         
         if(dog != null) {
             Event e = new Event();
@@ -118,6 +113,8 @@ public class OwnerBean {
             em.merge(e);
             em.merge(dog);
             em.flush();
+            
+            return e;
         } else {
             throw new NoSuchElementException("No dog exists with that name");
         }

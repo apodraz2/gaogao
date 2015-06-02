@@ -6,8 +6,10 @@ package com.gaogao.scheduler.servlet;
  * and open the template in the editor.
  */
 
+import com.gaogao.scheduler.beans.OwnerBean;
 import com.gaogao.scheduler.messaging.OwnerRequest;
 import com.gaogao.scheduler.messaging.OwnerRequest.OwnerOperation;
+import com.gaogao.scheduler.persistence.Owner;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -18,6 +20,7 @@ import java.util.logging.Logger;
 import javax.jms.QueueConnectionFactory;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
@@ -25,6 +28,7 @@ import javax.jms.JMSException;
 import javax.jms.Queue;
 import javax.jms.TemporaryQueue;
 import javax.jms.TextMessage;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
 import javax.servlet.annotation.ServletSecurity;
@@ -45,6 +49,11 @@ public class GaoGaoJMSServlet extends HttpServlet {
     private Queue queue;
     @Resource(mappedName = "jms/ConnectionFactory")    
     private QueueConnectionFactory queueConnectionFactory;
+    
+    RequestDispatcher dispatcher;
+    
+    @EJB
+    private OwnerBean ownerBean;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -103,21 +112,15 @@ public class GaoGaoJMSServlet extends HttpServlet {
                 answer = consumer.receiveBody(String.class);
             }
             
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet GaoGaoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet GaoGaoServlet at " + request.getContextPath() + "</h1>");
-            
-            out.println("<h1>");
-            
-            out.print("<p>");
-            
-            
-            out.println("</body>");
-            out.println("</html>");
+            for(Owner o: ownerBean.getOwnerList()) {
+                if(o.getEmail().equals(email)) {
+                    request.setAttribute("owner", o);
+                    break;
+                }
+            }
+                
+            dispatcher = getServletContext().getRequestDispatcher("/GaoGaoLoginServlet");
+            dispatcher.forward(request, response);
         }catch (Exception  e) {
             out.println("<html>");
             out.println("<h1>");
