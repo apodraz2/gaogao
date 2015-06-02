@@ -8,6 +8,7 @@ package com.gaogao.scheduler.beans;
 
 import com.gaogao.scheduler.persistence.Dog;
 import com.gaogao.scheduler.persistence.Event;
+import com.gaogao.scheduler.persistence.Kennel;
 import com.gaogao.scheduler.persistence.Owner;
 import com.gaogao.scheduler.persistence.Vet;
 import java.text.ParseException;
@@ -138,6 +139,17 @@ public class OwnerBean {
         o = em.merge(o);
         em.remove(o);
         em.flush();
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Kennel addKennel(Kennel kennel) {
+        em.persist(kennel);
+        
+        em.merge(kennel);
+        em.merge(kennel.getDog());
+        em.flush();
+        
+        return kennel;
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

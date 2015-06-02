@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
+import com.gaogao.scheduler.beans.MethodBean;
 import com.gaogao.scheduler.persistence.Dog;
 import com.gaogao.scheduler.persistence.Event;
 import com.gaogao.scheduler.persistence.Owner;
 import com.gaogao.scheduler.beans.OwnerBean;
-import com.gaogao.scheduler.beans.SingletonBean;
 import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -38,7 +38,6 @@ public class ServiceTest {
     private OwnerBean ownerBean;
     
     private Owner o;
-    private SingletonBean singletonBean;
     
     public ServiceTest() {
     }
@@ -67,7 +66,7 @@ public class ServiceTest {
     @Before
     public void setUp() throws NamingException {
         ownerBean = (OwnerBean)ec.getContext().lookup("java:global/classes/OwnerBean");
-        singletonBean = (SingletonBean) ec.getContext().lookup("java:global/classes/SingletonBean");
+        
         
     }
     

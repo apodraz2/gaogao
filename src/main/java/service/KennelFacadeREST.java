@@ -5,13 +5,18 @@
  */
 package service;
 
+import com.gaogao.scheduler.beans.MethodBean;
+import com.gaogao.scheduler.beans.OwnerBean;
+import com.gaogao.scheduler.persistence.Dog;
 import com.gaogao.scheduler.persistence.Kennel;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -28,11 +33,36 @@ import javax.ws.rs.Produces;
 public class KennelFacadeREST extends AbstractFacade<Kennel> {
     @PersistenceContext(unitName = "gaogaoPracticePU")
     private EntityManager em;
+    
+    @EJB 
+    private OwnerBean ownerBean;
+    
+    @EJB
+    private MethodBean methodBean;
 
     public KennelFacadeREST() {
         super(Kennel.class);
     }
 
+    @POST
+    @Path("/create")
+    public String createNew(@FormParam("email") String email,
+                            @FormParam("name") String name,
+                            @FormParam("number") String number,
+                            @FormParam("dog") String dog, 
+                            @FormParam("owner") String owner){
+        Kennel k = new Kennel();
+        k.setEmail(email);
+        k.setName(name);
+        k.setPhoneNumber(number);
+        Dog d = methodBean.getDogFromEmailAndName(owner, dog);
+        d.getProviderList().add(k);
+        k.setDog(d);
+        em.merge(d);
+        
+        return ownerBean.addKennel(k).toString(); 
+    }
+    
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})

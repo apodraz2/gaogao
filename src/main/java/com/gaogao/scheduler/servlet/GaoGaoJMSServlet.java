@@ -47,7 +47,7 @@ public class GaoGaoJMSServlet extends HttpServlet {
 
     @Resource(mappedName = "jms/GaoGaoQ")
     private Queue queue;
-    @Resource(mappedName = "jms/ConnectionFactory")    
+    @Resource(mappedName = "jms/se554-p2p")    
     private QueueConnectionFactory queueConnectionFactory;
     
     RequestDispatcher dispatcher;

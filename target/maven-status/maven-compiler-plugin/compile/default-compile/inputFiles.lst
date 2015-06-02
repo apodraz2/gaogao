@@ -3,6 +3,7 @@
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/service/EventFacadeREST.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/beans/OwnerBean.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/service/ApplicationConfig.java
+/Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/servlet/GaoGaoPubSubServlet.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/data/DogData.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Dog.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/messaging/AddDogRequest.java
@@ -15,7 +16,7 @@
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/service/AbstractFacade.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/service/VetFacadeREST.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/messaging/OwnerRequest.java
-/Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/beans/SingletonBean.java
+/Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/beans/MethodBean.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/data/EventData.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Event.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/service/ServiceProviderFacadeREST.java

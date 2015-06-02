@@ -38,7 +38,7 @@ public class GaoGaoMDB implements MessageListener{
     @EJB
     OwnerBean ownerBean;
     
-    @Resource(mappedName = "jms/ConnectionFactory")    
+    @Resource(mappedName = "jms/se554-p2p")    
     private QueueConnectionFactory queueConnectionFactory;
 
     @Override

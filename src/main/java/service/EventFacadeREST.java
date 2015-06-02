@@ -5,8 +5,8 @@
  */
 package service;
 
+import com.gaogao.scheduler.beans.MethodBean;
 import com.gaogao.scheduler.beans.OwnerBean;
-import com.gaogao.scheduler.beans.SingletonBean;
 import com.gaogao.scheduler.persistence.Dog;
 import com.gaogao.scheduler.persistence.Event;
 import com.gaogao.scheduler.persistence.Owner;
@@ -40,7 +40,7 @@ public class EventFacadeREST extends AbstractFacade<Event> {
     OwnerBean ownerBean;
     
     @EJB
-    private SingletonBean singletonBean;
+    private MethodBean methodBean;
 
     public EventFacadeREST() {
         super(Event.class);
@@ -57,8 +57,8 @@ public class EventFacadeREST extends AbstractFacade<Event> {
         System.out.println(description);
         System.out.println(email);
         
-        Owner o = singletonBean.getOwnerFromEmail(email);
-        Dog d = singletonBean.getDogFromEmailAndName(email, dog);
+        Owner o = methodBean.getOwnerFromEmail(email);
+        Dog d = methodBean.getDogFromEmailAndName(email, dog);
         
         return ownerBean.addEvent(o, description, date, d).toString();
         

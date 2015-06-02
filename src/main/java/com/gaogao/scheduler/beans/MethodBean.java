@@ -17,7 +17,7 @@ import javax.ejb.Stateless;
  * @author adampodraza
  */
 @Stateless
-public class SingletonBean {
+public class MethodBean {
 
     @EJB
     private OwnerBean ownerBean;

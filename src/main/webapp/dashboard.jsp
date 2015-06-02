@@ -4,6 +4,7 @@
     Author     : adampodraza
 --%>
 
+<%@page import="com.gaogao.scheduler.persistence.ServiceProvider"%>
 <%@page import="com.gaogao.scheduler.persistence.Event"%>
 <%@page import="javax.xml.bind.Marshaller"%>
 <%@page import="javax.xml.bind.JAXBContext"%>
@@ -54,8 +55,9 @@
                 <div>
                 <h2>Event Management Console</h2>
                 <div>
+                    
                     <% for(Dog d: o.getDogList()) { %>
-                        <%= d.getName() %>'s Scheduled Events:
+                        
                         <% for(Event e: d.getEventList()) { %>
                         <%= e.getDescription() %> Completed: <%= e.isCompleted() %>
                         <% } %>
@@ -78,6 +80,40 @@
                     
                 </form>
                 </div>
+                    
+                    <div>
+                        <h2>Service Provider Management Console</h2>
+                        
+                        <% for(Dog d: o.getDogList()) { %>
+                            <% for(ServiceProvider sp : d.getProviderList()) { %>
+                            <h3><%= sp.getName() %> </h3>
+                            <%= sp.getEmail() %>
+                            <%= sp.getPhoneNumber() %>
+                            <% } %>
+                        
+                        <%}%>
+                        
+                        <h2>Add Service Provider For Your Dog</h2>
+                        <form action="/gaogao/webresources/kennel/create" method="post">
+                            Please enter the name:
+                            <input type="text" name="name"/>
+                            <br>
+                            Please enter the email:
+                            <input type="text" name="email"/>
+                            <br>
+                            Please enter the phone number:
+                            <input type="text" name="number"/>
+                            <br>
+                            Please enter the dog's name:
+                            <input type="text" name="dog"/>
+                            <input type="hidden" name="owner" value="<%=o.getEmail()%>"/>
+                            <br>
+                            <input type="submit"/>
+                        </form>
+                        
+                    </div>
+                        
+                        
         </div>
     </body>
 </html>
