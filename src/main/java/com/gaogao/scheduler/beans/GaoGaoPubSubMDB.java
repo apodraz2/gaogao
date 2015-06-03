@@ -8,19 +8,17 @@ package com.gaogao.scheduler.beans;
 import com.gaogao.scheduler.messaging.OwnerRequest;
 import com.gaogao.scheduler.persistence.Owner;
 import java.io.StringReader;
-import java.util.logging.Level;
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
-import javax.ejb.Stateless;
 import javax.jms.Destination;
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageListener;
 import javax.jms.QueueConnectionFactory;
 import javax.jms.TextMessage;
+import javax.jms.TopicConnectionFactory;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -29,19 +27,17 @@ import javax.xml.bind.Unmarshaller;
  *
  * @author adampodraza
  */
-@MessageDriven(mappedName = "jms/GaoGaoQ",
+@MessageDriven(mappedName = "jms/GaoGaoTopic",
 activationConfig = {
     @ActivationConfigProperty(
-     propertyName = "destinationType", propertyValue = "javax.jms.Queue")})
-public class GaoGaoMDB implements MessageListener{
-    
+     propertyName = "destinationType", propertyValue = "javax.jms.Topic")})
+public class GaoGaoPubSubMDB {
     @EJB
     OwnerBean ownerBean;
     
-    @Resource(mappedName = "jms/se554-p2p")    
-    private QueueConnectionFactory queueConnectionFactory;
+    @Resource(mappedName = "jms/se554-pubsub")    
+    private TopicConnectionFactory topicConnectionFactory;
 
-    @Override
     public void onMessage(Message message) {
         //To change body of generated methods, choose Tools | Templates.
         OwnerRequest or = null;
@@ -68,7 +64,7 @@ public class GaoGaoMDB implements MessageListener{
                 
                 Destination replyDestination = message.getJMSReplyTo();
                 
-                try (JMSContext context = queueConnectionFactory.createContext()) {
+                try (JMSContext context = topicConnectionFactory.createContext()) {
 
                     // prepare response 
                     TextMessage replyMessage
@@ -109,4 +105,5 @@ public class GaoGaoMDB implements MessageListener{
         }
         return or;
     }
+    
 }

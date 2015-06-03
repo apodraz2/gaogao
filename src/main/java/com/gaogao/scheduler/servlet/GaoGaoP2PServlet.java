@@ -43,7 +43,7 @@ import javax.xml.bind.Marshaller;
  *
  * @author adampodraza
  */
-public class GaoGaoJMSServlet extends HttpServlet {
+public class GaoGaoP2PServlet extends HttpServlet {
 
     @Resource(mappedName = "jms/GaoGaoQ")
     private Queue queue;
@@ -68,9 +68,8 @@ public class GaoGaoJMSServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, JAXBException, JMSException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+        
+        
             
             String email = request.getParameter("email");
             
@@ -121,13 +120,7 @@ public class GaoGaoJMSServlet extends HttpServlet {
                 
             dispatcher = getServletContext().getRequestDispatcher("/GaoGaoLoginServlet");
             dispatcher.forward(request, response);
-        }catch (Exception  e) {
-            out.println("<html>");
-            out.println("<h1>");
-            out.println("Error processing request: " + e.toString());
-            out.println("</html>");
-            throw new RuntimeException(e);
-        }
+        
         
     
     }
@@ -147,9 +140,9 @@ public class GaoGaoJMSServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (JAXBException ex) {
-            Logger.getLogger(GaoGaoJMSServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GaoGaoP2PServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JMSException ex) {
-            Logger.getLogger(GaoGaoJMSServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GaoGaoP2PServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -167,9 +160,9 @@ public class GaoGaoJMSServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (JAXBException ex) {
-            Logger.getLogger(GaoGaoJMSServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GaoGaoP2PServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JMSException ex) {
-            Logger.getLogger(GaoGaoJMSServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GaoGaoP2PServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

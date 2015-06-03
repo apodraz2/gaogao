@@ -5,12 +5,32 @@
  */
 package com.gaogao.scheduler.servlet;
 
+import com.gaogao.scheduler.beans.OwnerBean;
+import com.gaogao.scheduler.messaging.OwnerRequest;
+import com.gaogao.scheduler.persistence.Owner;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.jms.JMSConsumer;
+import javax.jms.JMSContext;
+import javax.jms.JMSException;
+import javax.jms.Queue;
+import javax.jms.QueueConnectionFactory;
+import javax.jms.TemporaryQueue;
+import javax.jms.TextMessage;
+import javax.jms.Topic;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 /**
  *
@@ -18,6 +38,15 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class GaoGaoPubSubServlet extends HttpServlet {
 
+    @Resource(mappedName = "jms/GaoGaoTopic")
+    private Topic topic;
+    @Resource(mappedName = "jms/se554-pubsub")    
+    private QueueConnectionFactory topicConnectionFactory;
+    
+    RequestDispatcher dispatcher;
+    
+    @EJB
+    private OwnerBean ownerBean;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -28,20 +57,58 @@ public class GaoGaoPubSubServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet GaoGaoPubSubServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet GaoGaoPubSubServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+            throws ServletException, IOException, JAXBException, JMSException {
+        
+        String email = request.getParameter("email");
+            
+            String password = request.getParameter("password");
+            String op = "CREATE_OWNER";
+            
+            OwnerRequest.OwnerOperation operation = null;
+            
+            for(OwnerRequest.OwnerOperation o : OwnerRequest.OwnerOperation.values()) {
+                if(op.equals(o.toString())) {
+                    operation = o;
+                }
+            }
+            
+            
+            OwnerRequest or = new OwnerRequest(email, password, operation);
+            
+            StringWriter writer = new StringWriter();
+
+
+            Marshaller m = JAXBContext.newInstance(OwnerRequest.class).createMarshaller();
+            m.marshal(or, writer);
+            String answer = "Don't know";
+            
+            try (JMSContext context = topicConnectionFactory.createContext()) {
+                TemporaryQueue replyQueue = context.createTemporaryQueue();
+                String msg = writer.toString();
+                
+                TextMessage requestMessage
+                        = context.createTextMessage(msg);
+                
+                requestMessage.setJMSReplyTo(replyQueue);
+                
+                System.out.println("Request: " + msg);
+                context.createProducer().send(
+                        topic, requestMessage);
+
+                JMSConsumer consumer = context.createConsumer(replyQueue);
+                answer = consumer.receiveBody(String.class);
+            }
+            
+            for(Owner o: ownerBean.getOwnerList()) {
+                if(o.getEmail().equals(email)) {
+                    request.setAttribute("owner", o);
+                    break;
+                }
+            }
+                
+            dispatcher = getServletContext().getRequestDispatcher("/GaoGaoLoginServlet");
+            dispatcher.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,7 +123,13 @@ public class GaoGaoPubSubServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (JAXBException ex) {
+            Logger.getLogger(GaoGaoPubSubServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JMSException ex) {
+            Logger.getLogger(GaoGaoPubSubServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -70,7 +143,13 @@ public class GaoGaoPubSubServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (JAXBException ex) {
+            Logger.getLogger(GaoGaoPubSubServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JMSException ex) {
+            Logger.getLogger(GaoGaoPubSubServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
