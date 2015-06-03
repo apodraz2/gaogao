@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="10" failures="0" name="ServiceTest" time="31.403" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="KennelTest" time="0.005" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_31.jdk/Contents/Home/jre/lib"/>
@@ -62,14 +62,5 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="ServiceTest" name="addDog" time="0.488"/>
-  <testcase classname="ServiceTest" name="addVet" time="0.076"/>
-  <testcase classname="ServiceTest" name="addEvent" time="0.083"/>
-  <testcase classname="ServiceTest" name="removeKennel" time="0.078"/>
-  <testcase classname="ServiceTest" name="removeEvent" time="0.195"/>
-  <testcase classname="ServiceTest" name="removeOwner" time="0.093"/>
-  <testcase classname="ServiceTest" name="addKennel" time="0.033"/>
-  <testcase classname="ServiceTest" name="newUserTest" time="0.018"/>
-  <testcase classname="ServiceTest" name="removeDog" time="0.105"/>
-  <testcase classname="ServiceTest" name="removeVet" time="0.082"/>
+  <testcase classname="KennelTest" name="createTest" time="0.005"/>
 </testsuite>
