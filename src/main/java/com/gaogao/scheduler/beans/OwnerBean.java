@@ -37,6 +37,8 @@ public class OwnerBean {
     @EJB
     private MethodBean methodBean;
     
+    @EJB
+    private SingletonBean singletonBean;
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -78,6 +80,9 @@ public class OwnerBean {
         em.merge(o);
         
         em.flush();
+        
+        singletonBean.add(1);
+        
         return d;
     }
     
@@ -105,6 +110,8 @@ public class OwnerBean {
             em.merge(o);
             em.remove(d);
             em.flush();
+            
+            singletonBean.add(-1);
         }
     }
     
