@@ -2,6 +2,7 @@
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/service/DogFacadeREST.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/service/EventFacadeREST.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/beans/OwnerBean.java
+/Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/service/GaoGaoService.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/service/ApplicationConfig.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/servlet/GaoGaoPubSubServlet.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/data/DogData.java

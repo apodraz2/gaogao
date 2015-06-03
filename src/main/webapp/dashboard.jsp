@@ -84,14 +84,14 @@
                     <div>
                         <h2>Service Provider Management Console</h2>
                         
-                        <% for(Dog d: o.getDogList()) { %>
-                            <% for(ServiceProvider sp : d.getProviderList()) { %>
+                        
+                            <% for(ServiceProvider sp : o.getProviderList()) { %>
                             <h3><%= sp.getName() %> </h3>
                             <%= sp.getEmail() %>
                             <%= sp.getPhoneNumber() %>
                             <% } %>
                         
-                        <%}%>
+                        
                         
                         <h2>Add Service Provider For Your Dog</h2>
                         <form action="/gaogao/webresources/kennel/create" method="post">
@@ -104,8 +104,6 @@
                             Please enter the phone number:
                             <input type="text" name="number"/>
                             <br>
-                            Please enter the dog's name:
-                            <input type="text" name="dog"/>
                             <input type="hidden" name="owner" value="<%=o.getEmail()%>"/>
                             <br>
                             <input type="submit"/>

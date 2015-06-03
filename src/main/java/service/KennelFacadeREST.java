@@ -9,6 +9,7 @@ import com.gaogao.scheduler.beans.MethodBean;
 import com.gaogao.scheduler.beans.OwnerBean;
 import com.gaogao.scheduler.persistence.Dog;
 import com.gaogao.scheduler.persistence.Kennel;
+import com.gaogao.scheduler.persistence.ServiceProvider;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -49,18 +50,10 @@ public class KennelFacadeREST extends AbstractFacade<Kennel> {
     public String createNew(@FormParam("email") String email,
                             @FormParam("name") String name,
                             @FormParam("number") String number,
-                            @FormParam("dog") String dog, 
                             @FormParam("owner") String owner){
-        Kennel k = new Kennel();
-        k.setEmail(email);
-        k.setName(name);
-        k.setPhoneNumber(number);
-        Dog d = methodBean.getDogFromEmailAndName(owner, dog);
-        d.getProviderList().add(k);
-        k.setDog(d);
-        em.merge(d);
+        Kennel k = ownerBean.addKennel(email, name, number, owner);
         
-        return ownerBean.addKennel(k).toString(); 
+        return k.toString(); 
     }
     
     @POST

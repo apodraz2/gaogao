@@ -39,6 +39,11 @@ public class Owner implements Serializable {
     @JoinTable(name = "OWNER_DOG")
     private List<Dog> dogList;
     
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "owner",
+            fetch= FetchType.LAZY)
+    private List<ServiceProvider> providerList;
+    
     public Owner() {}
     
     public Owner(String email, String password) {
@@ -69,6 +74,15 @@ public class Owner implements Serializable {
     
     public void setDogList(List<Dog> dogs) {
         this.dogList = dogs;
+    }
+    
+    @XmlTransient
+    public List<ServiceProvider> getProviderList() {
+        return providerList;
+    }
+
+    public void setProviderList(List<ServiceProvider> providerList) {
+        this.providerList = providerList;
     }
 
     @Override

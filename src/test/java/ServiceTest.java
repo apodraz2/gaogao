@@ -9,6 +9,9 @@ import com.gaogao.scheduler.persistence.Dog;
 import com.gaogao.scheduler.persistence.Event;
 import com.gaogao.scheduler.persistence.Owner;
 import com.gaogao.scheduler.beans.OwnerBean;
+import com.gaogao.scheduler.persistence.Kennel;
+import com.gaogao.scheduler.persistence.ServiceProvider;
+import com.gaogao.scheduler.persistence.Vet;
 import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -168,6 +171,66 @@ public class ServiceTest {
         
         
         ownerBean.removeOwner(o);
+    }
+    
+    @Test
+    public void addKennel() {
+        o = ownerBean.createOwner(email + "f", password + "6");
+        
+        ServiceProvider k = ownerBean.addKennel("yay", "yay@yaymail.com", "773-555-5555", email+"f");
+        
+        o.getProviderList().add(k);
+        
+        assertNotNull(k);
+        
+        assertTrue(o.getProviderList().size() == 1);
+    }
+    
+    @Test
+    public void removeKennel() {
+        o = ownerBean.createOwner(email + "g", password + "7");
+        
+        Kennel k = ownerBean.addKennel("yay", "boo@boomail.com", "773-555-5555", email+"g");
+        
+        //o.getProviderList().add(k);
+        
+        assertNotNull(k);
+        
+        assertTrue(o.getProviderList().size() <= 1);
+        
+        ownerBean.removeKennel(k, o);
+        
+        assertTrue(o.getProviderList().isEmpty());
+    }
+    
+    @Test
+    public void addVet() {
+        o = ownerBean.createOwner(email + "h", password + "8");
+        
+        Vet v = ownerBean.addVet("yay", "yo@yomail.com", "773-555-5555", email+"h");
+        
+        assertNotNull(v);
+        
+        o.getProviderList().add(v);
+        assertFalse(o.getProviderList().isEmpty());
+    }
+    
+    @Test
+    public void removeVet() {
+        
+        o = ownerBean.createOwner(email + "i", password + "9");
+        
+        Vet v = ownerBean.addVet("yay", "gar@garmail.com", "773-555-5555", email+"i");
+        
+        assertNotNull(v);
+        
+        o.getProviderList().add(v);
+        assertFalse(o.getProviderList().isEmpty());
+        
+        ownerBean.removeVet(v, o);
+        
+        assertTrue(o.getProviderList().isEmpty());
+        
     }
     
 }

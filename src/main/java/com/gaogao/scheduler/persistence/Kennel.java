@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 public class Kennel extends ServiceProvider {
+    
     private String checkList;
 
     public String getCheckList() {

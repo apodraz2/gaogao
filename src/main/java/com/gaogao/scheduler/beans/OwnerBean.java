@@ -10,6 +10,7 @@ import com.gaogao.scheduler.persistence.Dog;
 import com.gaogao.scheduler.persistence.Event;
 import com.gaogao.scheduler.persistence.Kennel;
 import com.gaogao.scheduler.persistence.Owner;
+import com.gaogao.scheduler.persistence.ServiceProvider;
 import com.gaogao.scheduler.persistence.Vet;
 import java.text.ParseException;
 import java.util.List;
@@ -33,6 +34,9 @@ public class OwnerBean {
     @PersistenceContext(unitName="gaogaoPracticePU")
     private EntityManager em;
     
+    @EJB
+    private MethodBean methodBean;
+    
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -47,6 +51,11 @@ public class OwnerBean {
     //@RolesAllowed("admin")
     public List<Owner> getOwnerList() {
         return em.createQuery("select o from Owner o").getResultList();
+    }
+    
+    @RolesAllowed("admin")
+    public int getNumUsers() {
+        return em.createQuery("select o from Owner o").getResultList().size();
     }
     
     
@@ -92,8 +101,9 @@ public class OwnerBean {
             
             d.getOwnerList().remove(o);
             
+            d = em.merge(d);
             em.merge(o);
-            em.merge(d);
+            em.remove(d);
             em.flush();
         }
     }
@@ -142,26 +152,55 @@ public class OwnerBean {
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Kennel addKennel(Kennel kennel) {
-        em.persist(kennel);
-        
-        em.merge(kennel);
-        em.merge(kennel.getDog());
-        em.flush();
-        
-        return kennel;
+    public Kennel addKennel(String email, String name, String number, String owner) {
+        Owner o = methodBean.getOwnerFromEmail(owner);
+       
+        Kennel k = new Kennel();
+        k.setEmail(email);
+        k.setName(name);
+        k.setPhoneNumber(number);
+        k.setOwner(o);
+        o.getProviderList().add(k);
+        em.persist(k);
+        em.merge(o);
+        //em.flush();
+        return k;
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addVet(Dog d, String name, String email) {
+    public void removeKennel(Kennel k, Owner o) {
+        
+        Kennel ken = em.merge(k);
+        o.getProviderList().remove(ken);
+        em.merge(o);
+        em.remove(ken);
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Vet addVet(String name, String email, String number, String owner) {
+        Owner o = methodBean.getOwnerFromEmail(owner);
+        
         Vet v = new Vet();
-        v.setName(name);
+        
         v.setEmail(email);
-        v.setDog(d);
-        d.getProviderList().add(v);
+        v.setName(name);
+        v.setPhoneNumber(number);
+        v.setOwner(o);
+        o.getProviderList().add(v);
         em.persist(v);
-        em.merge(d);
+        em.merge(o);
         em.flush();
         
+        return v;
+        
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void removeVet(Vet v, Owner o) {
+        Vet vet = em.merge(v);
+        o.getProviderList().remove(v);
+        em.remove(vet);
+        em.merge(o);
+        em.flush();
     }
 }

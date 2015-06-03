@@ -64,11 +64,6 @@ public class Dog implements Serializable {
     )
     private List<Event> eventList;
     
-    @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "dog",
-            fetch= FetchType.LAZY)
-    private List<ServiceProvider> providerList;
-    
     //@OneToMany(optional = true)
     @ManyToMany(mappedBy="dogList")
     private List<Owner> ownerList;
@@ -134,14 +129,7 @@ public class Dog implements Serializable {
         return this.ownerList;
     }
 
-    @XmlTransient
-    public List<ServiceProvider> getProviderList() {
-        return providerList;
-    }
-
-    public void setProviderList(List<ServiceProvider> providerList) {
-        this.providerList = providerList;
-    }
+    
     
     public void setEventList(List<Event> events) {
         this.eventList = events;

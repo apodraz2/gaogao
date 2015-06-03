@@ -21,6 +21,7 @@ service/OwnerFacadeREST.class
 service/EventFacadeREST.class
 com/gaogao/scheduler/persistence/ServiceProvider.class
 com/gaogao/scheduler/persistence/Kennel.class
+service/GaoGaoService.class
 com/gaogao/scheduler/persistence/Vet_.class
 com/gaogao/scheduler/beans/MethodBean.class
 data/DogData.class

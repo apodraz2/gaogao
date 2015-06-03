@@ -33,7 +33,6 @@ public class ApplicationConfig extends Application {
         resources.add(service.EventFacadeREST.class);
         resources.add(service.KennelFacadeREST.class);
         resources.add(service.OwnerFacadeREST.class);
-        resources.add(service.ServiceProviderFacadeREST.class);
         resources.add(service.VetFacadeREST.class);
     }
     

@@ -5,13 +5,16 @@
  */
 package service;
 
+import com.gaogao.scheduler.beans.OwnerBean;
 import com.gaogao.scheduler.persistence.Vet;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -28,9 +31,25 @@ import javax.ws.rs.Produces;
 public class VetFacadeREST extends AbstractFacade<Vet> {
     @PersistenceContext(unitName = "gaogaoPracticePU")
     private EntityManager em;
+    
+    @EJB
+    private OwnerBean ownerBean;
 
     public VetFacadeREST() {
         super(Vet.class);
+    }
+    
+    @POST
+    @Path("/create")
+    public String createNew(@FormParam("email") String email,
+                            @FormParam("name") String name,
+                            @FormParam("number") String number,
+                            @FormParam("owner") String owner){
+        
+        Vet v = ownerBean.addVet(email, name, number, owner);
+        
+        return v.toString();
+        
     }
 
     @POST

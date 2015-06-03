@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -20,20 +21,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author adampodraza
  */
 @Entity
-@Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
-@XmlRootElement
+@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
 public abstract class ServiceProvider implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
+    private long id;
+    
     private String email;
     
     private String name;
     
-    @JoinColumn(name="DOG_ID")
-    private Dog dog;
+    @ManyToOne
+    @JoinColumn(name="OWNER")
+    private Owner owner;
     
     private String phoneNumber;
+    
+    ServiceProvider() {
+        this.id = System.currentTimeMillis();
+    }
 
     public String getName() {
         return name;
@@ -51,12 +58,12 @@ public abstract class ServiceProvider implements Serializable {
         this.email = email;
     }
 
-    public Dog getDog() {
-        return dog;
+    public Owner getOwner() {
+        return this.owner;
     }
 
-    public void setDog(Dog dog) {
-        this.dog = dog;
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     public String getPhoneNumber() {
@@ -89,7 +96,7 @@ public abstract class ServiceProvider implements Serializable {
 
     @Override
     public String toString() {
-        return "com.gaogao.scheduler.persistence.CareTaker[ id=" + email + " ]";
+        return "com.gaogao.scheduler.persistence.ServiceProvider[ id=" + email + " ]";
     }
     
 }
