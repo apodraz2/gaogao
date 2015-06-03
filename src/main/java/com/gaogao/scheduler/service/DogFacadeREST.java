@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package com.gaogao.scheduler.service;
 
 import com.gaogao.scheduler.beans.MethodBean;
 import com.gaogao.scheduler.beans.OwnerBean;

@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package com.gaogao.scheduler.service;
 
+import com.gaogao.scheduler.beans.MethodBean;
 import com.gaogao.scheduler.beans.OwnerBean;
-import com.gaogao.scheduler.persistence.Vet;
+import com.gaogao.scheduler.persistence.Dog;
+import com.gaogao.scheduler.persistence.Kennel;
+import com.gaogao.scheduler.persistence.ServiceProvider;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -27,42 +30,43 @@ import javax.ws.rs.Produces;
  * @author adampodraza
  */
 @Stateless
-@Path("/vet")
-public class VetFacadeREST extends AbstractFacade<Vet> {
+@Path("/kennel")
+public class KennelFacadeREST extends AbstractFacade<Kennel> {
     @PersistenceContext(unitName = "gaogaoPracticePU")
     private EntityManager em;
     
-    @EJB
+    @EJB 
     private OwnerBean ownerBean;
-
-    public VetFacadeREST() {
-        super(Vet.class);
-    }
     
+    @EJB
+    private MethodBean methodBean;
+
+    public KennelFacadeREST() {
+        super(Kennel.class);
+    }
+
     @POST
     @Path("/create")
     public String createNew(@FormParam("email") String email,
                             @FormParam("name") String name,
                             @FormParam("number") String number,
                             @FormParam("owner") String owner){
+        Kennel k = ownerBean.addKennel(email, name, number, owner);
         
-        Vet v = ownerBean.addVet(email, name, number, owner);
-        
-        return v.toString();
-        
+        return k.toString(); 
     }
-
+    
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Vet entity) {
+    public void create(Kennel entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, Vet entity) {
+    public void edit(@PathParam("id") String id, Kennel entity) {
         super.edit(entity);
     }
 
@@ -75,21 +79,21 @@ public class VetFacadeREST extends AbstractFacade<Vet> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Vet find(@PathParam("id") String id) {
+    public Kennel find(@PathParam("id") String id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<Vet> findAll() {
+    public List<Kennel> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Vet> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Kennel> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

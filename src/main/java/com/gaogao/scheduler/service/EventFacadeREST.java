@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package com.gaogao.scheduler.service;
 
 import com.gaogao.scheduler.beans.MethodBean;
 import com.gaogao.scheduler.beans.OwnerBean;
 import com.gaogao.scheduler.persistence.Dog;
-import com.gaogao.scheduler.persistence.Kennel;
-import com.gaogao.scheduler.persistence.ServiceProvider;
+import com.gaogao.scheduler.persistence.Event;
+import com.gaogao.scheduler.persistence.Owner;
+import java.text.ParseException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -30,70 +31,77 @@ import javax.ws.rs.Produces;
  * @author adampodraza
  */
 @Stateless
-@Path("/kennel")
-public class KennelFacadeREST extends AbstractFacade<Kennel> {
+@Path("/event")
+public class EventFacadeREST extends AbstractFacade<Event> {
     @PersistenceContext(unitName = "gaogaoPracticePU")
     private EntityManager em;
     
-    @EJB 
-    private OwnerBean ownerBean;
+    @EJB
+    OwnerBean ownerBean;
     
     @EJB
     private MethodBean methodBean;
 
-    public KennelFacadeREST() {
-        super(Kennel.class);
-    }
-
-    @POST
-    @Path("/create")
-    public String createNew(@FormParam("email") String email,
-                            @FormParam("name") String name,
-                            @FormParam("number") String number,
-                            @FormParam("owner") String owner){
-        Kennel k = ownerBean.addKennel(email, name, number, owner);
-        
-        return k.toString(); 
+    public EventFacadeREST() {
+        super(Event.class);
     }
     
     @POST
+    @Path("/create")
+    public String createNewEvent(@FormParam("name") String dog, 
+                                 @FormParam("description") String description,
+                                 @FormParam("date") String date,
+                                 @FormParam("owner") String email) throws ParseException {
+        
+        System.out.println(dog);
+        System.out.println(description);
+        System.out.println(email);
+        
+        Owner o = methodBean.getOwnerFromEmail(email);
+        Dog d = methodBean.getDogFromEmailAndName(email, dog);
+        
+        return ownerBean.addEvent(o, description, date, d).toString();
+        
+    }
+
+    @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Kennel entity) {
+    public void create(Event entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, Kennel entity) {
+    public void edit(@PathParam("id") Long id, Event entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
+    public void remove(@PathParam("id") Long id) {
         super.remove(super.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Kennel find(@PathParam("id") String id) {
+    public Event find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<Kennel> findAll() {
+    public List<Event> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Kennel> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Event> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

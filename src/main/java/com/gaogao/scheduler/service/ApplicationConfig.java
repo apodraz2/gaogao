@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package com.gaogao.scheduler.service;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -29,11 +29,11 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(service.DogFacadeREST.class);
-        resources.add(service.EventFacadeREST.class);
-        resources.add(service.KennelFacadeREST.class);
-        resources.add(service.OwnerFacadeREST.class);
-        resources.add(service.VetFacadeREST.class);
+        resources.add(com.gaogao.scheduler.service.DogFacadeREST.class);
+        resources.add(com.gaogao.scheduler.service.EventFacadeREST.class);
+        resources.add(com.gaogao.scheduler.service.KennelFacadeREST.class);
+        resources.add(com.gaogao.scheduler.service.OwnerFacadeREST.class);
+        resources.add(com.gaogao.scheduler.service.VetFacadeREST.class);
     }
     
 }
