@@ -38,7 +38,7 @@ public class OwnerBean {
     private MethodBean methodBean;
     
     @EJB
-    private SingletonBean singletonBean;
+    private NumTotalDogsBean numTotalDogsBean;
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -58,6 +58,11 @@ public class OwnerBean {
     @RolesAllowed("admin")
     public int getNumUsers() {
         return em.createQuery("select o from Owner o").getResultList().size();
+    }
+    
+    @RolesAllowed("admin")
+    public int getNumDogs() {
+        return numTotalDogsBean.getNumDogs();
     }
     
     
@@ -81,7 +86,8 @@ public class OwnerBean {
         
         em.flush();
         
-        singletonBean.add(1);
+        numTotalDogsBean.add(1);
+        System.out.println(numTotalDogsBean.getNumDogs());
         
         return d;
     }
@@ -111,7 +117,7 @@ public class OwnerBean {
             em.remove(d);
             em.flush();
             
-            singletonBean.add(-1);
+            numTotalDogsBean.add(-1);
         }
     }
     

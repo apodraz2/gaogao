@@ -12,9 +12,12 @@ import com.gaogao.scheduler.persistence.Owner;
 import java.text.ParseException;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -68,6 +71,7 @@ public class DogFacadeREST extends AbstractFacade<Dog> {
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void create(Dog entity) {
         super.create(entity);
     }
@@ -75,12 +79,14 @@ public class DogFacadeREST extends AbstractFacade<Dog> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void edit(@PathParam("id") Long id, Dog entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void remove(@PathParam("id") Long id) {
         super.remove(super.find(id));
     }
@@ -88,6 +94,7 @@ public class DogFacadeREST extends AbstractFacade<Dog> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
+    @RolesAllowed("admin")
     public Dog find(@PathParam("id") Long id) {
         return super.find(id);
     }
@@ -95,6 +102,7 @@ public class DogFacadeREST extends AbstractFacade<Dog> {
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
+    @RolesAllowed("admin")
     public List<Dog> findAll() {
         return super.findAll();
     }
@@ -102,6 +110,7 @@ public class DogFacadeREST extends AbstractFacade<Dog> {
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
+    @RolesAllowed("admin")
     public List<Dog> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
@@ -109,6 +118,7 @@ public class DogFacadeREST extends AbstractFacade<Dog> {
     @GET
     @Path("count")
     @Produces("text/plain")
+    @RolesAllowed("admin")
     public String countREST() {
         return String.valueOf(super.count());
     }

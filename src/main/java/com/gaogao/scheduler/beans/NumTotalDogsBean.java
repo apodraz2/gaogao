@@ -8,16 +8,16 @@ package com.gaogao.scheduler.beans;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.Stateful;
 
 /**
  *
  * @author adampodraza
  */
-@Singleton
-@Startup
-public class SingletonBean {
+@Stateful
+public class NumTotalDogsBean {
     
-    int numDogs;
+    private int numDogs;
     
     @PostConstruct
     private void startup() {

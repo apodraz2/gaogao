@@ -8,6 +8,7 @@
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Dog.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Vet.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/data/VetData.java
+/Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/beans/NumTotalDogsBean.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/beans/GaoGaoPubSubMDB.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/service/ApplicationConfig.java
 /Users/adampodraza/NetBeansProjects/mavenproject2/gaogao/src/main/java/com/gaogao/scheduler/persistence/Owner.java

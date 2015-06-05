@@ -26,6 +26,7 @@ com/gaogao/scheduler/persistence/Kennel.class
 com/gaogao/scheduler/persistence/Vet_.class
 com/gaogao/scheduler/beans/GaoGaoP2PMDB.class
 com/gaogao/scheduler/beans/MethodBean.class
+com/gaogao/scheduler/beans/NumTotalDogsBean.class
 data/DogData.class
 data/KennelData.class
 com/gaogao/scheduler/messaging/OwnerRequest.class

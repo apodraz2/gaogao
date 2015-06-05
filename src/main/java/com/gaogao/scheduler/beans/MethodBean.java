@@ -10,13 +10,15 @@ import com.gaogao.scheduler.persistence.Owner;
 import java.util.Iterator;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.ejb.Stateless;
 
 /**
  *
  * @author adampodraza
  */
-@Stateless
+@Singleton
+@Startup
 public class MethodBean {
 
     @EJB

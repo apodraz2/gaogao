@@ -7,7 +7,10 @@ package com.gaogao.scheduler.service;
 
 import com.gaogao.scheduler.persistence.Owner;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -36,6 +39,7 @@ public class OwnerFacadeREST extends AbstractFacade<Owner> {
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void create(Owner entity) {
         super.create(entity);
     }
@@ -43,12 +47,14 @@ public class OwnerFacadeREST extends AbstractFacade<Owner> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void edit(@PathParam("id") String id, Owner entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void remove(@PathParam("id") String id) {
         super.remove(super.find(id));
     }
@@ -56,6 +62,7 @@ public class OwnerFacadeREST extends AbstractFacade<Owner> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
+    @RolesAllowed("admin")
     public Owner find(@PathParam("id") String id) {
         return super.find(id);
     }
@@ -63,6 +70,7 @@ public class OwnerFacadeREST extends AbstractFacade<Owner> {
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
+    @RolesAllowed("admin")
     public List<Owner> findAll() {
         return super.findAll();
     }
@@ -70,6 +78,7 @@ public class OwnerFacadeREST extends AbstractFacade<Owner> {
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
+    @RolesAllowed("admin")
     public List<Owner> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
@@ -77,6 +86,7 @@ public class OwnerFacadeREST extends AbstractFacade<Owner> {
     @GET
     @Path("count")
     @Produces("text/plain")
+    @RolesAllowed("admin")
     public String countREST() {
         return String.valueOf(super.count());
     }

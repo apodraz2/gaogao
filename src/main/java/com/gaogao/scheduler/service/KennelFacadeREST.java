@@ -11,8 +11,11 @@ import com.gaogao.scheduler.persistence.Dog;
 import com.gaogao.scheduler.persistence.Kennel;
 import com.gaogao.scheduler.persistence.ServiceProvider;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -59,6 +62,7 @@ public class KennelFacadeREST extends AbstractFacade<Kennel> {
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void create(Kennel entity) {
         super.create(entity);
     }
@@ -66,12 +70,14 @@ public class KennelFacadeREST extends AbstractFacade<Kennel> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void edit(@PathParam("id") String id, Kennel entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void remove(@PathParam("id") String id) {
         super.remove(super.find(id));
     }
@@ -79,6 +85,7 @@ public class KennelFacadeREST extends AbstractFacade<Kennel> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
+    @RolesAllowed("admin")
     public Kennel find(@PathParam("id") String id) {
         return super.find(id);
     }
@@ -86,6 +93,7 @@ public class KennelFacadeREST extends AbstractFacade<Kennel> {
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
+    @RolesAllowed("admin")
     public List<Kennel> findAll() {
         return super.findAll();
     }
@@ -93,6 +101,7 @@ public class KennelFacadeREST extends AbstractFacade<Kennel> {
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
+    @RolesAllowed("admin")
     public List<Kennel> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
@@ -100,6 +109,7 @@ public class KennelFacadeREST extends AbstractFacade<Kennel> {
     @GET
     @Path("count")
     @Produces("text/plain")
+    @RolesAllowed("admin")
     public String countREST() {
         return String.valueOf(super.count());
     }
