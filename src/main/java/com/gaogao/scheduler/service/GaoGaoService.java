@@ -44,10 +44,12 @@ public class GaoGaoService {
     }
     
     @WebMethod(operationName="removeOwner")
-    public void removeOwner(@WebParam (name="email") String email) {
+    public String removeOwner(@WebParam (name="email") String email) {
         Owner o = methodBean.getOwnerFromEmail(email);
         
         ownerBean.removeOwner(o);
+        
+        return "ok";
     }
     
     
@@ -64,12 +66,14 @@ public class GaoGaoService {
     }
 
     @WebMethod(operationName = "removeDog")
-    public void removeDog(@WebParam (name="Owner") String owner,
+    public String removeDog(@WebParam (name="Owner") String owner,
                             @WebParam (name="dog") String dog) {
         Owner o = methodBean.getOwnerFromEmail(owner);
         Dog d = methodBean.getDogFromEmailAndName(owner, dog);
         
         ownerBean.removeDog(d, o);
+        
+        return "ok";
     }
     
     
