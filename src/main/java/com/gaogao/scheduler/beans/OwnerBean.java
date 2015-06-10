@@ -15,6 +15,7 @@ import com.gaogao.scheduler.persistence.Vet;
 import java.text.ParseException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -28,6 +29,7 @@ import javax.persistence.PersistenceContext;
  * @author adampodraza
  */
 @Stateless
+@DeclareRoles({"admin", "user"})
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class OwnerBean {
     

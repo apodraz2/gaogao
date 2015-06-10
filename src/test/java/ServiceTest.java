@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.AccessLocalException;
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -231,6 +232,35 @@ public class ServiceTest {
         
         assertTrue(o.getProviderList().isEmpty());
         
+    }
+    
+    @Test
+    public void getNumUsers() {
+        o = ownerBean.createOwner(email + "j", password + "10");
+        boolean a = false;
+        try {
+            ownerBean.getNumUsers();
+        } catch (Exception e) {
+            a = true;
+        }
+        
+        assertTrue(a);
+        
+    }
+    
+    @Test
+    public void getNumDogs() {
+        o = ownerBean.createOwner(email + "k", password + "11");
+        
+        boolean a = false;
+        
+        try {
+            ownerBean.getNumDogs();
+        } catch (Exception e) {
+            a = true;
+        }
+        
+        assertTrue(a);
     }
     
 }
